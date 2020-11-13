@@ -1,0 +1,56 @@
+[
+  {
+    "name": "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région",
+    "seasons": ["ete", "automne", "hiver", "printemps"],
+    "choices": [
+      {
+        "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
+        "effects": {
+          "religieux": -15,
+          "liberaux": -15
+        }
+      },
+      {
+        "label": "Décliner au motif qu’ils ne sont pas de même culte que vous",
+        "effects": {
+          "religieux": 15,
+          "liberaux": -15
+        }
+      }
+    ],
+    "next": null
+  },
+  {
+    "name": "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région",
+    "seasons": ["automne", "hiver"],
+    "choices": [],
+    "next": null
+  },
+  {
+    "name": "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région",
+    "seasons": ["printemps"],
+    "choices": [
+      {
+        "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
+        "effects": {
+          "religieux": -15,
+          "liberaux": -15
+        }
+      }
+    ],
+    "next": {
+      "name": "event en chaine",
+      "seasons": ["ete"],
+      "choices": [
+        {
+          "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
+          "effects": {
+            "religieux": -15,
+            "liberaux": -15
+          }
+        }
+      ],
+      "next": null
+    }
+  }
+]
