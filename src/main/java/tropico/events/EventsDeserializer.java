@@ -1,7 +1,7 @@
 package tropico.events;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonReader;
+import tropico.Season;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

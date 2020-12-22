@@ -5,7 +5,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 import tropico.events.Event;
 import tropico.events.EventsDeserializer;
-import tropico.events.Season;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,6 +23,6 @@ public class Test {
         eventsMap.forEach((k, v) -> System.out.printf("%s : %s | ", k, v));
 
         System.out.println();
-        System.out.println(eventsMap.get(Season.automne));
+        System.out.println(eventsMap.get(Season.AUTUMN));
     }
 }

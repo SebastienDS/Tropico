@@ -17,4 +17,10 @@ public class Choice {
                 ", effects=" + effects +
                 '}';
     }
+
+    public String getLabel() {
+        return label;
+    }
+
+
 }

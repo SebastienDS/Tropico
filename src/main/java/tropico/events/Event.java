@@ -1,8 +1,11 @@
 package tropico.events;
 
+import tropico.Season;
+
+import java.util.Iterator;
 import java.util.List;
 
-public class Event {
+public class Event implements Iterable<Choice> {
 
     private final String name;
     private final List<Season> seasons;
@@ -16,7 +19,13 @@ public class Event {
         this.next = next;
     }
 
-    public List<Season> getSeasons() { return seasons; }
+    public List<Season> getSeasons() {
+        return seasons;
+    }
+
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
@@ -26,5 +35,10 @@ public class Event {
                 ", choices=" + choices +
                 ", next=" + next +
                 '}';
+    }
+
+    @Override
+    public Iterator<Choice> iterator() {
+        return choices.iterator();
     }
 }

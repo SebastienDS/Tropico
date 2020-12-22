@@ -1,7 +1,7 @@
-package tropico.events;
+package tropico;
 
 public enum Season {
-    ete, automne, hiver, printemps;
+    SUMMER, AUTUMN, WINTER, SPRING;
 
     public static boolean contains(Season season) {
         for (Season s: Season.values()) {
