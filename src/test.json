@@ -6,15 +6,19 @@
       {
         "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
         "effects": {
-          "RELIGIEUX": -15,
-          "LIBERAUX": -15
+          "factions": {
+            "RELIGIEUX": -15,
+            "LIBERAUX": -15
+          }
         }
       },
       {
         "label": "Décliner au motif qu’ils ne sont pas de même culte que vous",
         "effects": {
-          "RELIGIEUX": 15,
-          "LIBERAUX": -15
+          "factions": {
+            "RELIGIEUX": -15,
+            "LIBERAUX": -15
+          }
         }
       }
     ],
@@ -33,8 +37,10 @@
       {
         "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
         "effects": {
-          "RELIGIEUX": -15,
-          "LIBERAUX": -15
+          "factions": {
+            "RELIGIEUX": -15,
+            "LIBERAUX": -15
+          }
         }
       }
     ],
@@ -45,8 +51,10 @@
         {
           "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
           "effects": {
-            "RELIGIEUX": -15,
-            "LIBERAUX": -15
+            "factions": {
+              "RELIGIEUX": -15,
+              "LIBERAUX": -15
+            }
           }
         }
       ],

@@ -5,8 +5,9 @@ import tropico.Faction;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class Effects extends HashMap<String, Integer> {
+public class Effects {
 
     private static final List<String> available = List.of(
             "agriculture",
@@ -14,14 +15,28 @@ public class Effects extends HashMap<String, Integer> {
             "tresorerie"
     );
 
+    private final Map<Faction, Integer> factionEffects = new HashMap<>();
+    private final Map<String, Integer> resourceEffects = new HashMap<>();
+
     public static boolean isAvailable(String effect) {
         return available.contains(effect);
     }
 
+    public void add(Faction faction, int value) {
+        if (!Faction.contains(faction)) throw new JsonSyntaxException("Faction " + faction + "is not available");
+        factionEffects.put(faction, value);
+    }
+
+    public void add(String resource, int value) {
+        if (!Effects.isAvailable(resource)) throw new JsonSyntaxException("Resource " + resource + "is not available");
+        resourceEffects.put(resource, value);
+    }
+
     @Override
-    public Integer put(String effect, Integer value) {
-        if (!(Faction.contains(Faction.valueOf(effect)) || Effects.isAvailable(effect)))
-            throw new JsonSyntaxException("Effect " + effect + " is not available");
-        return super.put(effect, value);
+    public String toString() {
+        return "Effects{" +
+                "factionEffects=" + factionEffects +
+                ", resourceEffects=" + resourceEffects +
+                '}';
     }
 }
