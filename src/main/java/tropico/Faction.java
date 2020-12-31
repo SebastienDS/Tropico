@@ -1,5 +1,7 @@
 package tropico;
 
+import tropico.utils.Utils;
+
 public enum Faction {
     CAPITALISTES,
     COMMUNISTES,
@@ -10,15 +12,18 @@ public enum Faction {
     NATIONALISTES,
     LOYALISTES;
 
-    private double satisfaction;
+    private static final int SATISFACTION_MIN = 0;
+    private static final int SATISFACTION_MAX = 100;
+
+    private int satisfaction;
     private int supporter;
 
-    public double getSatisfaction() {
+    public int getSatisfaction() {
         return satisfaction;
     }
 
-    public void addSatisfaction(double value) {
-        satisfaction += value;
+    public void addSatisfaction(int value) {
+        satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
     }
 
     public int getSupporter() {

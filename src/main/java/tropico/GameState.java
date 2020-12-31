@@ -10,24 +10,28 @@ import tropico.events.EventsDeserializer;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
 public class GameState {
 
-    private static Season season;
+    private Season season;
     private final Difficulty difficulty;
-    private final Resources resources = new Resources();
+    private final Resources resources = new Resources(0, 0, 0);
     private final List<Faction> factions;
     private final Map<Season, List<Event>> events;
+    private final PlayerManagement players = new PlayerManagement();
 
     public GameState(Season season, Difficulty difficulty, List<Faction> factions) throws FileNotFoundException {
         this.season = season;
         this.difficulty = difficulty;
         this.factions = Objects.requireNonNull(factions);
         events = loadEvents("src/test.json");
+    }
+
+    public GameState() throws FileNotFoundException {
+        this(Season.SUMMER, Difficulty.MEDIUM, List.of(Faction.values()));
     }
 
     private static Map<Season, List<Event>> loadEvents(String eventsPath) throws FileNotFoundException {
