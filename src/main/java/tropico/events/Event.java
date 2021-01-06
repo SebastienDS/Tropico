@@ -10,13 +10,11 @@ public class Event implements Iterable<Choice> {
     private final String name;
     private final List<Season> seasons;
     private final List<Choice> choices;
-    private final Event next;
 
-    public Event(String name, List<Season> seasons, List<Choice> choices, Event next) {
+    public Event(String name, List<Season> seasons, List<Choice> choices) {
         this.name = name;
         this.seasons = seasons;
         this.choices = choices;
-        this.next = next;
     }
 
     public List<Season> getSeasons() {
@@ -33,7 +31,6 @@ public class Event implements Iterable<Choice> {
                 "name='" + name + '\'' +
                 ", seasons=" + seasons +
                 ", choices=" + choices +
-                ", next=" + next +
                 '}';
     }
 

@@ -12,26 +12,27 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class GameState {
 
     private Season season;
-    private final Difficulty difficulty;
-    private final Resources resources = new Resources(0, 0, 0);
-    private final List<Faction> factions;
+    private static Difficulty difficulty;
     private final Map<Season, List<Event>> events;
-    private final PlayerManagement players = new PlayerManagement();
+    private final PlayerManagement players;
 
-    public GameState(Season season, Difficulty difficulty, List<Faction> factions) throws FileNotFoundException {
+    public GameState(Season season, Difficulty difficulty) throws FileNotFoundException {
         this.season = season;
-        this.difficulty = difficulty;
-        this.factions = Objects.requireNonNull(factions);
+        GameState.difficulty = difficulty;
         events = loadEvents("src/test.json");
+        players = new PlayerManagement();
     }
 
     public GameState() throws FileNotFoundException {
-        this(Season.SUMMER, Difficulty.MEDIUM, List.of(Faction.values()));
+        this(Season.SUMMER, Difficulty.MEDIUM);
+    }
+
+    public Difficulty getDifficulty() {
+        return difficulty;
     }
 
     private static Map<Season, List<Event>> loadEvents(String eventsPath) throws FileNotFoundException {
@@ -42,6 +43,5 @@ public class GameState {
                 .create();
 
         return gson.fromJson(new JsonReader(new FileReader(eventsPath)), eventType);
-
     }
 }

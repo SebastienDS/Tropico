@@ -3,6 +3,7 @@ module tropico {
     requires javafx.fxml;
     requires com.google.gson;
 
+    opens tropico to com.google.gson;
     opens tropico.controllers to javafx.fxml;
     exports tropico.controllers;
 }

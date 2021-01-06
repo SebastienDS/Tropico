@@ -34,14 +34,8 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
         List<Season> seasons = deserializeSeasons(obj.get("seasons").getAsJsonArray(), context);
         List<Choice> choices = new ArrayList<>();
         obj.get("choices").getAsJsonArray().forEach(choice -> choices.add(deserializeChoice(choice.getAsJsonObject(), context)));
-        JsonElement nextElement = obj.get("next");
-        Event next = null;
 
-        if (!nextElement.isJsonNull()) {
-            next = deserializeEvent(nextElement.getAsJsonObject(), context);
-        }
-
-        return new Event(name, seasons, choices, next);
+        return new Event(name, seasons, choices);
     }
 
     private List<Season> deserializeSeasons(JsonArray array, JsonDeserializationContext context) {
@@ -60,23 +54,29 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
     private Choice deserializeChoice(JsonObject obj, JsonDeserializationContext context) {
         String label = obj.get("label").getAsString();
         JsonObject effects = obj.getAsJsonObject("effects");
-        return new Choice(label, deserializeEffects(effects, context));
+        JsonElement nextElement = obj.get("next");
+        Event next = null;
+
+        if (!nextElement.isJsonNull()) {
+            next = deserializeEvent(nextElement.getAsJsonObject(), context);
+        }
+        return new Choice(label, deserializeEffects(effects, context), next);
     }
 
     private Effects deserializeEffects(JsonObject obj, JsonDeserializationContext context) {
         Effects effects = new Effects();
 
-        Type factionType = new TypeToken<Map<Faction, Integer>>(){}.getType();
+        Type factionType = new TypeToken<Map<String, Integer>>(){}.getType();
         Type resourceType = new TypeToken<Map<String, Integer>>(){}.getType();
 
-        Map<Faction, Integer> factions = context.deserialize(obj.get("factions"), factionType);
+        Map<String, Integer> factions = context.deserialize(obj.get("factions"), factionType);
         Map<String, Integer> resource = context.deserialize(obj.get("resources"), resourceType);
 
         if (factions == null) factions = new HashMap<>();
         if (resource == null) resource = new HashMap<>();
 
-        factions.forEach(effects::add);
-        resource.forEach(effects::add);
+        factions.forEach(effects::addFaction);
+        resource.forEach(effects::addResource);
 
         return effects;
     }

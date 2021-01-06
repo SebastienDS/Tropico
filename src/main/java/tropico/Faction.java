@@ -2,21 +2,20 @@ package tropico;
 
 import tropico.utils.Utils;
 
-public enum Faction {
-    CAPITALISTES,
-    COMMUNISTES,
-    LIBERAUX,
-    RELIGIEUX,
-    MILITARISTES,
-    ECOLOGISTES,
-    NATIONALISTES,
-    LOYALISTES;
+public class Faction {
 
     private static final int SATISFACTION_MIN = 0;
     private static final int SATISFACTION_MAX = 100;
 
+    private final String name;
     private int satisfaction;
     private int supporter;
+
+    public Faction(String name, int satisfaction, int supporter) {
+        this.name = name;
+        this.satisfaction = satisfaction;
+        this.supporter = supporter;
+    }
 
     public int getSatisfaction() {
         return satisfaction;
@@ -34,10 +33,4 @@ public enum Faction {
         supporter += count;
     }
 
-    public static boolean contains(Faction faction) {
-        for (Faction f: Faction.values()) {
-            if (f.equals(faction)) return true;
-        }
-        return false;
-    }
 }

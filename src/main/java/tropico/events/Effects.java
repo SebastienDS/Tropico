@@ -15,19 +15,18 @@ public class Effects {
             "tresorerie"
     );
 
-    private final Map<Faction, Integer> factionEffects = new HashMap<>();
+    private final Map<String, Integer> factionEffects = new HashMap<>();
     private final Map<String, Integer> resourceEffects = new HashMap<>();
 
     public static boolean isAvailable(String effect) {
         return available.contains(effect);
     }
 
-    public void add(Faction faction, int value) {
-        if (!Faction.contains(faction)) throw new JsonSyntaxException("Faction " + faction + "is not available");
+    public void addFaction(String faction, int value) {
         factionEffects.put(faction, value);
     }
 
-    public void add(String resource, int value) {
+    public void addResource(String resource, int value) {
         if (!Effects.isAvailable(resource)) throw new JsonSyntaxException("Resource " + resource + "is not available");
         resourceEffects.put(resource, value);
     }

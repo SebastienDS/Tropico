@@ -1,0 +1,42 @@
+[
+  {
+    "name": "capitalistes",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "communistes",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "liberaux",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "religieux",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "militaristes",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "ecologistes",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "nationalistes",
+    "satisfaction": 0,
+    "supporter": 15
+  },
+  {
+    "name": "loyalistes",
+    "satisfaction": 0,
+    "supporter": 15
+  }
+]

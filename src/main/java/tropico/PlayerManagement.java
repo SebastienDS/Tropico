@@ -1,35 +1,34 @@
 package tropico;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class PlayerManagement {
 
-    private final List<Object> players = new ArrayList<>();
+    private final List<Player> players = new ArrayList<>();
     private int currentPlayer = 0;
 
-    public PlayerManagement(int count) {
+    public PlayerManagement(int count) throws FileNotFoundException {
         if (count <= 0) throw new IllegalStateException("Must have players");
         for (int i = 0; i < count; i++) {
             this.addPlayer();
         }
     }
 
-    public PlayerManagement() {
+    public PlayerManagement() throws FileNotFoundException {
         this(1);
     }
 
-    public void addPlayer() {
-        players.add(null);
+    public void addPlayer() throws FileNotFoundException {
+        players.add(new Player());
     }
 
-    public void getPlayer() {
-//        return players.get(currentPlayer);
+    public Player getPlayer() {
+        return players.get(currentPlayer);
     }
 
     public void nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
     }
-
-
 }
