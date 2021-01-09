@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <VBox prefHeight="400.0" prefWidth="119.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Capitalistes : 100%" />
+            <Label text="Communistes : 100%" />
+            <Label text="Libéraux : 100%" />
+            <Label text="Religieux : 100%" />
+            <Label text="Militaristes : 100%" />
+            <Label text="Écologistes : 100%" />
+            <Label text="Nationalistes : 100%" />
+            <Label text="Loyalistes : 100%" />
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <SplitPane dividerPositions="0.10050251256281408" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+         <items>
+            <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="424.0" prefWidth="479.0">
+               <children>
+                  <Label prefHeight="503.0" prefWidth="110.0" text="Agriculture : 50%" textAlignment="CENTER">
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </Label>
+                  <Label prefHeight="564.0" prefWidth="131.0" text="Industrialisation : 50%" />
+                  <Label prefHeight="489.0" prefWidth="102.0" text="Nourriture : 4000" textAlignment="CENTER" />
+                  <Label prefHeight="495.0" prefWidth="137.0" text="Trésorerie : 10000$" textAlignment="RIGHT" />
+               </children>
+            </HBox>
+            <BorderPane prefHeight="200.0" prefWidth="479.0">
+               <center>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <RadioButton mnemonicParsing="false" text="Choix">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Choix 2">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Décliner poliment au motif que vous n’avez pas les infrastructures pour eux">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                           <VBox.margin>
+                              <Insets bottom="2.0" />
+                           </VBox.margin>
+                        </RadioButton>
+                        <RadioButton mnemonicParsing="false" text="Choix 3">
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </RadioButton>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <BorderPane.margin>
+                        <Insets />
+                     </BorderPane.margin>
+                     <padding>
+                        <Insets bottom="20.0" top="20.0" />
+                     </padding>
+                  </VBox>
+               </center>
+               <top>
+                  <Label text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque blandit vulputate libero, a tempor lectus euismod quis. Donec tincidunt nibh id risus elementum imperdiet. Morbi eget massa placerat, sodales tellus quis, lacinia arcu." textAlignment="CENTER" wrapText="true" BorderPane.alignment="CENTER">
+                     <BorderPane.margin>
+                        <Insets bottom="10.0" left="22.0" right="22.0" top="40.0" />
+                     </BorderPane.margin>
+                  </Label>
+               </top>
+            </BorderPane>
+         </items>
+      </SplitPane>
+   </center>
+</BorderPane>
