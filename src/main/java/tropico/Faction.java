@@ -17,6 +17,10 @@ public class Faction {
         this.supporter = supporter;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public int getSatisfaction() {
         return satisfaction;
     }
@@ -33,4 +37,8 @@ public class Faction {
         supporter += count;
     }
 
+    @Override
+    public String toString() {
+        return name + " : " + satisfaction + "% / " + supporter;
+    }
 }

@@ -31,4 +31,12 @@ public class PlayerManagement {
     public void nextPlayer() {
         currentPlayer = (currentPlayer + 1) % players.size();
     }
+
+    @Override
+    public String toString() {
+        return "PlayerManagement{" +
+                "players=" + players +
+                ", currentPlayer=" + currentPlayer +
+                '}';
+    }
 }

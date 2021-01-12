@@ -56,4 +56,14 @@ public class Resources {
     private static int limit(int a, int b) {
         return Math.max(Math.min(a, RESOURCE_MIN) + b, RESOURCE_MAX);
     }
+
+    @Override
+    public String toString() {
+        return "Resources{" +
+                "industry=" + industry +
+                ", farming=" + farming +
+                ", treasury=" + treasury +
+                ", foodUnit=" + foodUnit +
+                '}';
+    }
 }

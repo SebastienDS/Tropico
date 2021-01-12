@@ -12,7 +12,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        SceneManagement.createScene("primary", 640, 480);
+        SceneManagement.createScene("Interface_in_game", 960, 720);
         stage.setScene(SceneManagement.getScene());
         stage.show();
     }

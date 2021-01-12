@@ -27,12 +27,20 @@ public class GameState {
         players = new PlayerManagement();
     }
 
+    public GameState(Difficulty difficulty) throws FileNotFoundException {
+        this(Season.SUMMER, difficulty);
+    }
+
     public GameState() throws FileNotFoundException {
         this(Season.SUMMER, Difficulty.MEDIUM);
     }
 
     public Difficulty getDifficulty() {
         return difficulty;
+    }
+
+    public Player getPlayer() {
+        return players.getPlayer();
     }
 
     private static Map<Season, List<Event>> loadEvents(String eventsPath) throws FileNotFoundException {
@@ -43,5 +51,14 @@ public class GameState {
                 .create();
 
         return gson.fromJson(new JsonReader(new FileReader(eventsPath)), eventType);
+    }
+
+    @Override
+    public String toString() {
+        return "GameState{" +
+                "season=" + season +
+                ", events=" + events +
+                ", players=" + players +
+                '}';
     }
 }

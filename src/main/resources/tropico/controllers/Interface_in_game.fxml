@@ -8,10 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="tropico.controllers.GameController">
    <left>
-      <VBox prefHeight="400.0" prefWidth="119.0" BorderPane.alignment="CENTER">
+      <VBox fx:id="factions" prefHeight="400.0" prefWidth="119.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Capitalistes : 100%" />
             <Label text="Communistes : 100%" />
@@ -29,14 +28,14 @@
          <items>
             <HBox nodeOrientation="RIGHT_TO_LEFT" prefHeight="424.0" prefWidth="479.0">
                <children>
-                  <Label prefHeight="503.0" prefWidth="110.0" text="Agriculture : 50%" textAlignment="CENTER">
+                  <Label fx:id="farming" prefHeight="503.0" prefWidth="110.0" text="Agriculture : 50%" textAlignment="CENTER">
                      <opaqueInsets>
                         <Insets />
                      </opaqueInsets>
                   </Label>
-                  <Label prefHeight="564.0" prefWidth="131.0" text="Industrialisation : 50%" />
-                  <Label prefHeight="489.0" prefWidth="102.0" text="Nourriture : 4000" textAlignment="CENTER" />
-                  <Label prefHeight="495.0" prefWidth="137.0" text="Trésorerie : 10000$" textAlignment="RIGHT" />
+                  <Label fx:id="industry" prefHeight="564.0" prefWidth="131.0" text="Industrialisation : 50%" />
+                  <Label fx:id="foodUnit" prefHeight="489.0" prefWidth="102.0" text="Nourriture : 4000" textAlignment="CENTER" />
+                  <Label fx:id="treasury" prefHeight="495.0" prefWidth="137.0" text="Trésorerie : 10000$" textAlignment="RIGHT" />
                </children>
             </HBox>
             <BorderPane prefHeight="200.0" prefWidth="479.0">
