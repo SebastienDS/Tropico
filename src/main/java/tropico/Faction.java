@@ -25,6 +25,10 @@ public class Faction {
         return satisfaction;
     }
 
+    /**
+     * add satisfaction to the faction
+     * @param value
+     */
     public void addSatisfaction(int value) {
         satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
     }
@@ -33,6 +37,10 @@ public class Faction {
         return supporter;
     }
 
+    /**
+     * add supporter to the faction
+     * @param count
+     */
     public void addSupporter(int count) {
         supporter += count;
     }

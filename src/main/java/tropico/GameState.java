@@ -43,6 +43,12 @@ public class GameState {
         return players.getPlayer();
     }
 
+    /**
+     * load Events from json file
+     * @param eventsPath
+     * @return Map with events for each season
+     * @throws FileNotFoundException
+     */
     private static Map<Season, List<Event>> loadEvents(String eventsPath) throws FileNotFoundException {
         Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
 

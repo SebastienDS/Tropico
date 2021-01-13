@@ -40,11 +40,19 @@ public class GameController {
         setPlayer(gameStates.getPlayer());
     }
 
+    /**
+     * set the player to the view
+     * @param player
+     */
     private void setPlayer(Player player) {
         setFactions(player, factions);
         setResources(player);
     }
 
+    /**
+     * set the player's resources to the view
+     * @param player
+     */
     private void setResources(Player player) {
         treasury.setText("Trésorerie : " + player.getTreasury() + "%");
         foodUnit.setText("Nourriture : " + player.getFoodUnit());
@@ -52,6 +60,11 @@ public class GameController {
         farming.setText("Agriculture : " + player.getFarming() + "%");
     }
 
+    /**
+     * init factions from a player to match json factions
+     * @param player
+     * @param pane
+     */
     private static void initFactions(Player player, Pane pane) {
         var children = pane.getChildren();
         children.clear();
@@ -60,6 +73,11 @@ public class GameController {
                 .collect(Collectors.toList()));
     }
 
+    /**
+     * set factions of the player
+     * @param player
+     * @param pane
+     */
     private static void setFactions(Player player, Pane pane) {
         var faction = player.getFactions();
         var children = pane.getChildren();

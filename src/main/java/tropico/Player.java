@@ -38,6 +38,12 @@ public class Player {
         return resources.getFoodUnit();
     }
 
+    /**
+     * load factions from json file
+     * @param path
+     * @return List of faction
+     * @throws FileNotFoundException
+     */
     private static List<Faction> loadFactions(String path) throws FileNotFoundException {
         Type eventType = new TypeToken<List<Faction>>(){}.getType();
 

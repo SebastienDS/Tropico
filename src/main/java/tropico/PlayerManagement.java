@@ -20,6 +20,10 @@ public class PlayerManagement {
         this(1);
     }
 
+    /**
+     * add new player
+     * @throws FileNotFoundException
+     */
     public void addPlayer() throws FileNotFoundException {
         players.add(new Player());
     }
@@ -28,7 +32,10 @@ public class PlayerManagement {
         return players.get(currentPlayer);
     }
 
-    public void nextPlayer() {
+    /**
+     * set the next player
+     */
+    public void nextTurn() {
         currentPlayer = (currentPlayer + 1) % players.size();
     }
 

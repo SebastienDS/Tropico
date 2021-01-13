@@ -5,15 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="58ddce65-b0b7-4735-9a37-2df84dce4b95" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/tropico/controllers/GameController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tropico/Faction.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/Faction.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tropico/GameState.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/GameState.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tropico/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tropico/PlayerManagement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/PlayerManagement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/tropico/Resources.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/Resources.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/controllers/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tropico/controllers/Interface_in_game.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tropico/controllers/Interface_in_game.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/Season.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/Season.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/controllers/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/events/Effects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/events/Effects.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/events/Event.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/events/Event.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/events/EventsDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/events/EventsDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/utils/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/utils/Utils.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

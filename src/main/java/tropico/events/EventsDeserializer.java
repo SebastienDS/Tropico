@@ -2,7 +2,6 @@ package tropico.events;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import tropico.Faction;
 import tropico.Season;
 
 import java.lang.reflect.Type;
@@ -11,11 +10,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List<Event>>> {
+public class EventsDeserializer implements JsonDeserializer<Map<Season, List<Event>>> {
 
+    /**
+     * Custom deserialize for events
+     * @param jsonElement
+     * @param type
+     * @param jsonDeserializationContext
+     * @return Map with events for each season
+     * @throws JsonParseException
+     */
     @Override
-    public HashMap<Season, List<Event>> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-        HashMap<Season, List<Event>> events = new HashMap<>();
+    public Map<Season, List<Event>> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        Map<Season, List<Event>> events = new HashMap<>();
 
         JsonArray jsonArray = jsonElement.getAsJsonArray();
         for (JsonElement element: jsonArray) {
@@ -29,6 +36,12 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
         return events;
     }
 
+    /**
+     * custom deserialize for an Event
+     * @param obj
+     * @param context
+     * @return Event deserialized
+     */
     private Event deserializeEvent(JsonObject obj, JsonDeserializationContext context) {
         String name = obj.get("name").getAsString();
         List<Season> seasons = deserializeSeasons(obj.get("seasons").getAsJsonArray(), context);
@@ -38,6 +51,12 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
         return new Event(name, seasons, choices);
     }
 
+    /**
+     * custom deserialize for a seasons
+     * @param array
+     * @param context
+     * @return List of seasons
+     */
     private List<Season> deserializeSeasons(JsonArray array, JsonDeserializationContext context) {
         List<Season> seasons = new ArrayList<>();
 
@@ -51,6 +70,12 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
         return seasons;
     }
 
+    /**
+     * custom deserialize for a choice
+     * @param obj
+     * @param context
+     * @return Choice deserialized
+     */
     private Choice deserializeChoice(JsonObject obj, JsonDeserializationContext context) {
         String label = obj.get("label").getAsString();
         JsonObject effects = obj.getAsJsonObject("effects");
@@ -63,6 +88,12 @@ public class EventsDeserializer implements JsonDeserializer<HashMap<Season, List
         return new Choice(label, deserializeEffects(effects, context), next);
     }
 
+    /**
+     * custom deserialize for effects of a choice
+     * @param obj
+     * @param context
+     * @return Effects deserialized
+     */
     private Effects deserializeEffects(JsonObject obj, JsonDeserializationContext context) {
         Effects effects = new Effects();
 

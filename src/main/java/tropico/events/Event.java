@@ -34,6 +34,10 @@ public class Event implements Iterable<Choice> {
                 '}';
     }
 
+    /**
+     * make Event iterable on these choices
+     * @return Iterator<Choice>
+     */
     @Override
     public Iterator<Choice> iterator() {
         return choices.iterator();
