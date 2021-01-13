@@ -12,6 +12,7 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class GameState {
 
@@ -41,6 +42,19 @@ public class GameState {
 
     public Player getPlayer() {
         return players.getPlayer();
+    }
+
+    /**
+     * next turn
+     */
+    public void nextTurn() {
+        players.nextTurn();
+    }
+
+    public Event getNewEvent() {
+        Random rand = new Random();
+        List<Event> list = events.get(season);
+        return list.get(rand.nextInt(list.size()));
     }
 
     /**

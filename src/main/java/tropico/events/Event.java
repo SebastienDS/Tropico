@@ -18,7 +18,11 @@ public class Event implements Iterable<Choice> {
     }
 
     public List<Season> getSeasons() {
-        return seasons;
+        return List.copyOf(seasons);
+    }
+
+    public List<Choice> getChoices() {
+        return List.copyOf(choices);
     }
 
     public String getName() {
