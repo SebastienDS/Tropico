@@ -31,11 +31,11 @@ public class Event implements Iterable<Choice> {
 
     @Override
     public String toString() {
-        return "Event{" +
-                "name='" + name + '\'' +
-                ", seasons=" + seasons +
-                ", choices=" + choices +
-                '}';
+    	StringBuilder str = new StringBuilder(name);
+    	for (int i = 0; i < choices.size(); i++) {
+			str.append("\n" + (i+1) + ") " + choices.get(i));
+		}
+        return str.toString();
     }
 
     /**

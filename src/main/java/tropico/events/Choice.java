@@ -1,10 +1,11 @@
 package tropico.events;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import tropico.Player;
 
-public class Choice {
+public class Choice implements Iterable<Effect> {
 
     private final String label;
     private final ArrayList<Effect> effects;
@@ -42,4 +43,12 @@ public class Choice {
     	return next;
     }
 
+    /**
+     * Makes Choice iterable on his effects
+     * @return Iterator<Effect>
+     */
+    @Override
+    public Iterator<Effect> iterator() {
+        return effects.iterator();
+    }
 }

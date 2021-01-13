@@ -103,4 +103,8 @@ public class Player {
 
 		throw new IllegalArgumentException("Le nom n'est pas dans les factions existantes.");
 	}
+	
+	public String getResourcesAsString() {
+		return resources.toString();
+	}
 }

@@ -1,5 +1,6 @@
 package tropico.main;
 
+import tropico.Faction;
 import tropico.GameState;
 import tropico.Player;
 import tropico.events.Choice;
@@ -31,7 +32,7 @@ public class Main {
      * @throws Exception
      */
     public static GameState menu(Scanner sc) throws Exception {
-        System.out.println("0) Quitter \n1) Nouvelle partie \n");
+        System.out.println("-1) Quitter \n0) Nouvelle partie \n");
 
         int input = getInt(sc, -1, MENU_CHOICES.size());
         if (input == -1) System.exit(0);
@@ -45,33 +46,36 @@ public class Main {
      * @param game
      */
     public static void mainLoop(Scanner sc, GameState game) {
-        System.out.println("Entrer 1 afin de sauvegarder la partie en cours.");
 
-        int input;
-        Player player;
         Event event;
+        
+        StringBuilder choices = new StringBuilder();
+        choices.append("0) Sauvegarder la partie\n");
+        choices.append("1) Voir les détails des factions\n");
+        choices.append("2) Voir les ressources");
+        choices.append("3) Voir l'évennement");
+        choices.append("4) Choisir une action");
+        
+        List<Choice> eventChoices;
 
         while (true) {
-            player = game.getPlayer();
-            // print game
-            // get event filtered with choices doable
+            // TODO only doable events
             event = game.getNewEvent();
-            List<Choice> choices = event.getChoices();
+            eventChoices = event.getChoices();
 
-            input = getInt(sc, 0, choices.size());
-            if (input == 0) {
-                saveGame(game);
-                return;
-            }
-
-            // execute choice
-//            choices.get(input).execute();
+            actionChoice(game, sc, event, choices.toString());
+            
+            int input = getInt(sc, 1, eventChoices.size())-1;
+            Choice choice = eventChoices.get(input);
+            choice.forEach(effect->System.out.println(effect));
+            choice.choose(game.getPlayer());
 
             // next SEASON
             // check end of year
             // check game over
             // next player
             game.nextTurn();
+            
         }
     }
 
@@ -117,6 +121,7 @@ public class Main {
      * @return game loaded
      */
     private static GameState loadGame() {
+    	// TODO
         return null;
     }
 
@@ -125,7 +130,40 @@ public class Main {
      * @param game
      */
     private static void saveGame(GameState game) {
-
+    	// TODO
+    }
+    
+    private static void actionChoice(GameState game, Scanner sc, Event event, String choices) {
+    	int input;
+    	
+    	System.out.println(choices);
+        input = getInt(sc, 0, 4);
+        switch (input) {
+        case 0: {
+        	saveGame(game);
+            return;
+        }
+		case 1: {
+			List<Faction> factions = game.getPlayer().getFactions();
+			for (Faction faction : factions) {
+				System.out.println(faction);
+			}
+		}
+		case 2: {
+			System.out.println(game.getPlayer().getResourcesAsString());
+		}
+		case 3: {
+			System.out.println(event);
+		}
+		case 4: {
+			System.out.println(event);
+			
+			break;
+		}
+		default: {
+			actionChoice(game, sc, event, choices);
+		}
+		}
     }
 
 }
