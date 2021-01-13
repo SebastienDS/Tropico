@@ -78,7 +78,7 @@ public class EventsDeserializer implements JsonDeserializer<Map<Season, List<Eve
      */
     private Choice deserializeChoice(JsonObject obj, JsonDeserializationContext context) {
         String label = obj.get("label").getAsString();
-        JsonObject effects = obj.getAsJsonObject("effects");
+        JsonArray effects = obj.getAsJsonArray("effects");
         JsonElement nextElement = obj.get("next");
         Event next = null;
 
@@ -90,26 +90,77 @@ public class EventsDeserializer implements JsonDeserializer<Map<Season, List<Eve
 
     /**
      * custom deserialize for effects of a choice
-     * @param obj
+     * @param array
      * @param context
      * @return Effects deserialized
      */
-    private ArrayList<Effect> deserializeEffects(JsonObject obj, JsonDeserializationContext context) {
-    	ArrayList<Effect> effects = new ArrayList();
+    private ArrayList<Effect> deserializeEffects(JsonArray array, JsonDeserializationContext context) {
+    	ArrayList<Effect> effects = new ArrayList<>();
 
-        Type factionType = new TypeToken<Map<String, Integer>>(){}.getType();
-        Type resourceType = new TypeToken<Map<String, Integer>>(){}.getType();
-
-        Map<String, Integer> factions = context.deserialize(obj.get("factions"), factionType);
-        Map<String, Integer> resource = context.deserialize(obj.get("resources"), resourceType);
-
-        if (factions == null) factions = new HashMap<>();
-        if (resource == null) resource = new HashMap<>();
-
-        factions.forEach(effects::addFaction);
-        resource.forEach(effects::addResource);
-
+    	array.forEach(effect -> effects.add(deserializeEffect(effect.getAsJsonObject(), context)));
         return effects;
     }
+
+    /**
+     * custom deserialize for effect
+     * @param effect
+     * @param context
+     * @return Effect deserialize
+     * @throws IllegalStateException if type is invalid
+     */
+    private Effect deserializeEffect(JsonObject effect, JsonDeserializationContext context) {
+        switch (effect.get("type").getAsString()) {
+            case "satisfaction":
+                return deserializeSatisfactionEffect(effect, context);
+            case "supporter":
+                return deserializeSupporterEffect(effect,context);
+            case "resources":
+                return deserializeResourcesEffect(effect, context);
+        }
+        throw new IllegalStateException("type invalid");
+    }
+
+    /**
+     * deserialize resource effect
+     * @param effect
+     * @param context
+     * @return OtherEffect
+     */
+    private Effect deserializeResourcesEffect(JsonObject effect, JsonDeserializationContext context) {
+        Type resourceType = new TypeToken<OtherEffect.types>(){}.getType();
+        OtherEffect.types type = context.deserialize(effect.get("resource"), resourceType);
+        if (type == null) throw new IllegalStateException(effect.get("resource") + " is not a valid resource");
+        int value = effect.get("value").getAsInt();
+
+        return new OtherEffect(type, value);
+    }
+
+    /**
+     * deserialize Supporter effect
+     * @param effect
+     * @param context
+     * @return SupporterNumberEffect
+     */
+    private Effect deserializeSupporterEffect(JsonObject effect, JsonDeserializationContext context) {
+        String faction = effect.get("faction").getAsString();
+        int value = effect.get("value").getAsInt();
+        boolean percentage = effect.get("percentage").getAsBoolean();
+
+        return new SupporterNumberEffect(faction, value, percentage);
+    }
+
+    /**
+     * deserialize satisfaction effect
+     * @param effect
+     * @param context
+     * @return FactionSatisfactionEffect
+     */
+    private Effect deserializeSatisfactionEffect(JsonObject effect, JsonDeserializationContext context) {
+        String faction = effect.get("faction").getAsString();
+        int value = effect.get("value").getAsInt();
+
+        return new FactionSatisfactionEffect(faction, value);
+    }
+
 
 }

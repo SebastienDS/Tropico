@@ -5,22 +5,30 @@
     "choices": [
       {
         "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
-        "effects": {
-          "factions": {
-            "religieux": -15,
-            "liberaux": -15
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": -15
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": -15,
+            "percentage": true
           }
-        },
+        ],
         "next": null
       },
       {
         "label": "Décliner au motif qu’ils ne sont pas de même culte que vous",
-        "effects": {
-          "factions": {
-            "religieux": -15,
-            "liberaux": -15
+        "effects": [
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": -15
           }
-        },
+        ],
         "next": null
       }
     ]
@@ -36,12 +44,13 @@
     "choices": [
       {
         "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
-        "effects": {
-          "factions": {
-            "religieux": -15,
-            "liberaux": -15
+        "effects": [
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": -15
           }
-        },
+        ],
         "next": null
       }
     ]
