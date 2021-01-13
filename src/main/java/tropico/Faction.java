@@ -4,49 +4,64 @@ import tropico.utils.Utils;
 
 public class Faction {
 
-    private static final int SATISFACTION_MIN = 0;
-    private static final int SATISFACTION_MAX = 100;
+	private static final int SATISFACTION_MIN = 0;
+	private static final int SATISFACTION_MAX = 100;
 
-    private final String name;
-    private int satisfaction;
-    private int supporter;
+	private final String name;
+	private int satisfaction;
+	private int supporter;
 
-    public Faction(String name, int satisfaction, int supporter) {
-        this.name = name;
-        this.satisfaction = satisfaction;
-        this.supporter = supporter;
-    }
+	public Faction(String name, int satisfaction, int supporter) {
+		this.name = name;
+		this.satisfaction = satisfaction;
+		this.supporter = supporter;
+	}
 
-    public String getName() {
-        return name;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public int getSatisfaction() {
-        return satisfaction;
-    }
+	public int getSatisfaction() {
+		return satisfaction;
+	}
 
-    /**
-     * add satisfaction to the faction
-     * @param value
-     */
-    public void addSatisfaction(int value) {
-        satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
-    }
+	/**
+	 * add satisfaction to the faction
+	 * 
+	 * @param value
+	 */
+	public void addSatisfaction(int value) {
+		satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
+	}
 
-    public int getSupporter() {
-        return supporter;
-    }
+	public int getSupporter() {
+		return supporter;
+	}
 
-    /**
-     * add supporter to the faction
-     * @param count
-     */
-    public void addSupporter(int count) {
-        supporter += count;
-    }
+	/**
+	 * add supporter to the faction
+	 * 
+	 * @param count
+	 */
+	public void addSupporter(int count) {
+		supporter += count;
+	}
 
-    @Override
-    public String toString() {
-        return name + " : " + satisfaction + "% / " + supporter;
-    }
+	/**
+	 * changes the supporter count according to a percentage
+	 * 
+	 * @param percentage
+	 */
+	public void addSupporterPercentage(int percentage) {
+		supporter += supporter * percentage / 100;
+	}
+
+	@Override
+	public String toString() {
+		return name + " : " + satisfaction + "% / " + supporter;
+	}
+	
+	public boolean isName(String name) {
+		return this.name.equals(name);
+	}
 }

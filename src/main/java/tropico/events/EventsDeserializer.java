@@ -94,8 +94,8 @@ public class EventsDeserializer implements JsonDeserializer<Map<Season, List<Eve
      * @param context
      * @return Effects deserialized
      */
-    private Effects deserializeEffects(JsonObject obj, JsonDeserializationContext context) {
-        Effects effects = new Effects();
+    private ArrayList<Effect> deserializeEffects(JsonObject obj, JsonDeserializationContext context) {
+    	ArrayList<Effect> effects = new ArrayList();
 
         Type factionType = new TypeToken<Map<String, Integer>>(){}.getType();
         Type resourceType = new TypeToken<Map<String, Integer>>(){}.getType();
