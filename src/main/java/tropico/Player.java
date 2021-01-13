@@ -107,4 +107,25 @@ public class Player {
 	public String getResourcesAsString() {
 		return resources.toString();
 	}
+	
+	public int getSupporterTotal() {
+		int total = 0;
+		for (Faction faction : factions) {
+			total += faction.getSupporter();
+		}
+		
+		return total;
+	}
+	
+	public void generateResources() {
+		resources.generateFood();
+		resources.generateMoney();
+		int pop = getSupporterTotal();
+		int overflow = resources.consumeFood(pop);
+		if (overflow > 0) {
+			// TODO
+		} else if (resources.hasEnoughFarming(pop)) {
+			// TODO
+		}
+	}
 }

@@ -113,4 +113,28 @@ public class Resources {
 		return "Ressources :\n" + "Industrialisation : " + industry + "% / Agriculture : " + farming + "%\n"
 				+ "Trésorerie : " + treasury + "$\n" + "Nourriture : " + foodUnit + " unités";
 	}
+
+	/**
+	 * Consume the number of food needed for the population. If it's too low,
+	 * returns a number of citizen who will die
+	 * 
+	 * @param pop the number of citizen
+	 * @return number of citizen that can't be fed
+	 */
+	public int consumeFood(int pop) {
+		int totalNeeded = pop * FOOD_UNIT_PER_CITIZEN;
+		
+		if (totalNeeded > foodUnit) {
+			int nbr = pop - foodUnit/FOOD_UNIT_PER_CITIZEN ;
+			foodUnit %= FOOD_UNIT_PER_CITIZEN;
+			return nbr;
+		}
+		
+		foodUnit -= totalNeeded;
+		return 0;
+	}
+	
+	public boolean hasEnoughFarming(int pop) {
+		return pop * FOOD_UNIT_PER_CITIZEN < farming*40;
+	}
 }

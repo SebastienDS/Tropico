@@ -48,6 +48,10 @@ public class GameState {
      * next turn
      */
     public void nextTurn() {
+    	season = Season.nextSeason(season);
+    	if (season.equals(Season.SPRING)) {
+			
+		}
         players.nextTurn();
     }
 
