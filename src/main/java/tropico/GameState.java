@@ -16,13 +16,13 @@ import java.util.Map;
 public class GameState {
 
     private Season season;
-    private static Difficulty difficulty;
+    private final Difficulty difficulty;
     private final Map<Season, List<Event>> events;
     private final PlayerManagement players;
 
     public GameState(Season season, Difficulty difficulty) throws FileNotFoundException {
         this.season = season;
-        GameState.difficulty = difficulty;
+        this.difficulty = difficulty;
         events = loadEvents("src/test.json");
         players = new PlayerManagement();
     }
