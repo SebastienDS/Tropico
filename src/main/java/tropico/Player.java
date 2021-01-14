@@ -45,7 +45,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Adds industry value
-	 * 
+	 *
 	 * @param value
 	 */
 	public void addIndustry(int value) {
@@ -54,7 +54,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Adds farming value
-	 * 
+	 *
 	 * @param value
 	 */
 	public void addFarming(int value) {
@@ -63,7 +63,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Adds money to the treasury
-	 * 
+	 *
 	 * @param value
 	 */
 	public void addMoney(int value) {
@@ -72,7 +72,7 @@ public class Player implements Serializable {
 
 	/**
 	 * Adds food to the foofUnit field
-	 * 
+	 *
 	 * @param value
 	 */
 	public void addFood(int value) {
@@ -80,18 +80,19 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * load factions from json file
-	 * 
-	 * @param path The path where the json file is located
-	 * @return List of faction
-	 * @throws FileNotFoundException
+	 * get if the player is dead
+	 * @return true is player is dead
 	 */
-	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>() {
-		}.getType();
+	public boolean isDead() {
+		int thresholdOfDefeat = 10;
+		int sum = 0;
+		int totalSupporter = 0;
 
-		Gson gson = new Gson();
-		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
+		for (Faction faction: factions) {
+			sum += faction.getSatisfaction() * faction.getSupporter();
+			totalSupporter += faction.getSupporter();
+		}
+		return (double)sum / (totalSupporter == 0 ? 1 : totalSupporter) < thresholdOfDefeat;
 	}
 
 	@Override
@@ -115,7 +116,7 @@ public class Player implements Serializable {
 
 	/**
 	 * get total supporters of every factions
-	 * 
+	 *
 	 * @return total supporter
 	 */
 	public int getSupporterTotal() {
@@ -183,7 +184,7 @@ public class Player implements Serializable {
 				}
 			}
 		}
-		
+
 		return addedPop;
 	}
 
@@ -206,5 +207,19 @@ public class Player implements Serializable {
 		}
 
 		return chances;
+	}
+
+	/**
+	 * load factions from json file
+	 *
+	 * @param path The path where the json file is located
+	 * @return List of faction
+	 * @throws FileNotFoundException
+	 */
+	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
+		Type eventType = new TypeToken<List<Faction>>(){}.getType();
+
+		Gson gson = new Gson();
+		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
 	}
 }

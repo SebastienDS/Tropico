@@ -70,6 +70,14 @@ public class GameState implements Serializable {
     }
 
     /**
+     * check if the game is over
+     * @return true if a player is dead
+     */
+    public boolean isGameOver() {
+        return players.havePlayerDead();
+    }
+
+    /**
      * load Events from json file
      * @param eventsPath
      * @return Map with events for each season
