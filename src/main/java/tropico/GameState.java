@@ -17,6 +17,8 @@ import java.util.Random;
 
 public class GameState implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private Season season;
     private final Difficulty difficulty;
     private final Map<Season, List<Event>> events;

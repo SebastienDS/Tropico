@@ -1,6 +1,9 @@
 package tropico.events;
 
 abstract class AbstractEffect implements Effect {
+
+	private static final long serialVersionUID = 1L;
+
 	private final int value;
 
 	public AbstractEffect(int value) {

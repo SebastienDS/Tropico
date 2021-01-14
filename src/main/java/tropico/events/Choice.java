@@ -8,6 +8,8 @@ import tropico.Player;
 
 public class Choice implements Iterable<Effect>, Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final String label;
     private final ArrayList<Effect> effects;
     private final Event next;
