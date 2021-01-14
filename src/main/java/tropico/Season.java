@@ -14,8 +14,13 @@ public enum Season {
         }
         return false;
     }
-    
-    public static Season nextSeason(Season season) {
+
+	/**
+	 * get the next season
+	 * @param season
+	 * @return next Season
+	 */
+	public static Season nextSeason(Season season) {
     	switch (season) {
 		case SPRING:
 			return SUMMER;
