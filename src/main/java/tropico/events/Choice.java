@@ -29,7 +29,7 @@ public class Choice implements Iterable<Effect>, Serializable {
     }
     
     public boolean hasNextEvent() {
-    	return !next.equals(null);
+    	return next != null;
     }
     
     public Event getNextEvent() {
@@ -40,7 +40,6 @@ public class Choice implements Iterable<Effect>, Serializable {
     	for (Effect effect : effects) {
 			effect.applyEffect(p);
 		}
-    	
     	return next;
     }
 

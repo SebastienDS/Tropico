@@ -56,6 +56,10 @@ public class GameState implements Serializable {
         players.nextTurn();
     }
 
+    /**
+     * get a new random event
+     * @return random Event
+     */
     public Event getNewEvent() {
         Random rand = new Random();
         List<Event> list = events.get(season);

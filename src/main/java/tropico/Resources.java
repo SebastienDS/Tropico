@@ -135,7 +135,12 @@ public class Resources implements Serializable {
 		foodUnit -= totalNeeded;
 		return 0;
 	}
-	
+
+	/**
+	 * get if we can remove enough farming
+	 * @param pop
+	 * @return true if enough farming to pop
+	 */
 	public boolean hasEnoughFarming(int pop) {
 		return pop * FOOD_UNIT_PER_CITIZEN < farming*40;
 	}

@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player implements Serializable {
 
@@ -107,16 +108,18 @@ public class Player implements Serializable {
 	public String getResourcesAsString() {
 		return resources.toString();
 	}
-	
+
+	/**
+	 * get total supporters of every factions
+	 * @return total supporter
+	 */
 	public int getSupporterTotal() {
-		int total = 0;
-		for (Faction faction : factions) {
-			total += faction.getSupporter();
-		}
-		
-		return total;
+		return factions.stream().mapToInt(Faction::getSupporter).sum();
 	}
-	
+
+	/**
+	 * generate Resources
+	 */
 	public void generateResources() {
 		resources.generateFood();
 		resources.generateMoney();

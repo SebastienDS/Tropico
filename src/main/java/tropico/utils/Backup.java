@@ -6,6 +6,12 @@ import java.nio.file.Path;
 
 public class Backup {
 
+    /**
+     * serialize the object to file
+     * @param src
+     * @param obj
+     * @throws IOException
+     */
     public static void saveObject(String src, Object obj) throws IOException {
         File file = new File(src);
         // file.createNewFile();
@@ -20,6 +26,13 @@ public class Backup {
         }
     }
 
+    /** load the object from file
+     *
+     * @param src
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public static Object loadObject(String src) throws IOException, ClassNotFoundException {
         Path path = Path.of(src);
 
