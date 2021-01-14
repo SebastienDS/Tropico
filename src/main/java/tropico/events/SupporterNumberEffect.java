@@ -14,7 +14,7 @@ public class SupporterNumberEffect extends AbstractEffect {
 
 	@Override
 	public String toString() {
-		String percent = (percentage) ? "% de" : "";
+		String percent = (percentage) ? "% de " : "";
 		return super.toString() + percent + factionName;
 	}
 

@@ -53,7 +53,8 @@ public class GameState implements Serializable {
     public void nextTurn() {
     	season = Season.nextSeason(season);
     	if (season.equals(Season.SPRING)) {
-			
+			String str = getPlayer().generateResources();
+			System.out.println("C'est la fin de l'année ! Voici les conséquences :\n" + str);
 		}
         players.nextTurn();
     }
@@ -86,10 +87,6 @@ public class GameState implements Serializable {
 
     @Override
     public String toString() {
-        return "GameState{" +
-                "season=" + season +
-                ", events=" + events +
-                ", players=" + players +
-                '}';
+        return "season=" + season;
     }
 }

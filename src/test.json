@@ -12,10 +12,9 @@
             "value": -15
           },
           {
-            "type": "supporter",
+            "type": "satisfaction",
             "faction": "liberaux",
-            "value": -15,
-            "percentage": true
+            "value": -15
           }
         ],
         "next": null
@@ -24,9 +23,65 @@
         "label": "Décliner au motif qu’ils ne sont pas de même culte que vous",
         "effects": [
           {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": 15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": -30
+          }
+        ],
+        "next": null
+      },
+      {
+        "label": "Accepter sans condition",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "religieux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "satisfaction",
+            "faction": "nationalistes",
+            "value": -20
+          }
+        ],
+        "next": null
+      },
+      {
+        "label": "Accepter sous conditions d’aide financière de la part de l’OCU",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "religieux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "satisfaction",
+            "faction": "nationalistes",
+            "value": -20
+          },
+          {
             "type": "resources",
-            "resource": "INDUSTRY",
-            "value": -15
+            "resource": "TREASURY",
+            "value": 200
           }
         ],
         "next": null
@@ -34,21 +89,144 @@
     ]
   },
   {
-    "name": "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région",
+    "name": "Vous avez découvert un gisement d’or ! Que faire ?",
     "seasons": ["AUTUMN", "WINTER"],
-    "choices": []
-  },
-  {
-    "name": "L’Organisation des Caraïbes-Unis souhaite que vous accueillez des réfugiés climatiques suite aux récentes inondations dans la région",
-    "seasons": ["SPRING"],
     "choices": [
       {
-        "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
+        "label": "Utilisons-le pour améliorer le bien-être des citoyens !",
         "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "communistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": -30
+          },
           {
             "type": "resources",
             "resource": "INDUSTRY",
-            "value": -15
+            "value": 10
+          }
+        ],
+        "next": null
+      },
+      {
+        "label": "Exploitons-le au maximum pour moderniser le pays !",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "communistes",
+            "value": 10,
+            "percentage": false
+          },
+          {
+            "type": "satisfaction",
+            "faction": "ecologistes",
+            "value": -20
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": 10
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": 20
+          }
+        ],
+        "next": null
+      },
+      {
+        "label": "Vendons les terrains à l’Empire du Dragon et renflouons nos comptes secrets.",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "nationalistes",
+            "value": -30
+          },
+          {
+            "type": "satisfaction",
+            "faction": "loyalistes",
+            "value": 15
+          },
+          {
+            "type": "resources",
+            "resource": "TREASURY",
+            "value": 100
+          }
+        ],
+        "next": null
+      }
+    ]
+  },
+  {
+    "name": "Un ouragan va frapper l’île! Sauvons El Presidente!",
+    "seasons": ["SPRING", "SUMMER", "AUTUMN", "WINTER"],
+    "choices": [
+      {
+        "label": "Se mettre à l'abri",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "capitalistes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "communistes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "religieux",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "militaristes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "ecologistes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "nationalistes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "loyalistes",
+            "value": -10,
+            "percentage": true
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": -20
+          },
+          {
+            "type": "resources",
+            "resource": "FARMING",
+            "value": -10
           }
         ],
         "next": null

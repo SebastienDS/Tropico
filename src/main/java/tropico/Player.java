@@ -87,7 +87,8 @@ public class Player implements Serializable {
 	 * @throws FileNotFoundException
 	 */
 	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>(){}.getType();
+		Type eventType = new TypeToken<List<Faction>>() {
+		}.getType();
 
 		Gson gson = new Gson();
 		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
@@ -107,19 +108,20 @@ public class Player implements Serializable {
 
 		throw new IllegalArgumentException("Le nom n'est pas dans les factions existantes.");
 	}
-	
+
 	public String getResourcesAsString() {
 		return resources.toString();
 	}
 
 	/**
 	 * get total supporters of every factions
+	 * 
 	 * @return total supporter
 	 */
 	public int getSupporterTotal() {
 		return factions.stream().mapToInt(Faction::getSupporter).sum();
 	}
-	
+
 	public int getTotalSatisfaction() {
 		return factions.stream().mapToInt(Faction::getSatisfaction).sum();
 	}
@@ -127,29 +129,33 @@ public class Player implements Serializable {
 	/**
 	 * generate Resources
 	 */
-	public void generateResources() {
-		resources.generateFood();
-		resources.generateMoney();
-		
+	public String generateResources() {
+		StringBuilder str = new StringBuilder();
+		str.append("Vous avez générer " + resources.generateFood() + " de nourriture.\n");
+		str.append("Vous avez générer " + resources.generateMoney() + "$.\n");
+
 		int pop = getSupporterTotal();
 		int overflow = resources.consumeFood(pop);
-		
+
 		if (overflow > 0) {
 			killSupporters(overflow, pop);
+			str.append("Par manque de nourriture, " + overflow + " partisans sont morts.");
 		} else if (resources.hasEnoughFarming(pop)) {
-			generateNewSupporters(pop);
+			str.append("La nourriture coule à flots ! Il y a " + generateNewSupporters(pop) + " nouveaux partisans.");
 		}
+
+		return str.toString();
 	}
-	
+
 	private void killSupporters(int overflow, int pop) {
 		Random rd = new Random();
 		float count, rdfloat;
 		for (int i = 0; i < overflow; i++) {
 			rdfloat = rd.nextFloat();
 			count = 0;
-			
+
 			for (Faction faction : factions) {
-				count += faction.getSupporter()*1.0/pop;
+				count += faction.getSupporter() * 1.0 / pop;
 				if (rdfloat <= count) {
 					faction.killSupporter();
 					break;
@@ -157,18 +163,18 @@ public class Player implements Serializable {
 			}
 		}
 	}
-	
-	private void generateNewSupporters(int pop) {
+
+	private int generateNewSupporters(int pop) {
 		Random rd = new Random();
 		int addedPop = (int) (pop * (rd.nextFloat() * 9 + 1));
 		float count, rdfloat;
-		
+
 		for (int i = 0; i < addedPop; i++) {
 			rdfloat = rd.nextFloat();
 			count = 0;
-			
+
 			HashMap<Faction, Float> factionChances = calculateFactionsChances(pop);
-			
+
 			for (Faction faction : factions) {
 				count += factionChances.get(faction);
 				if (rdfloat <= count) {
@@ -177,26 +183,28 @@ public class Player implements Serializable {
 				}
 			}
 		}
+		
+		return addedPop;
 	}
-	
+
 	private HashMap<Faction, Float> calculateFactionsChances(int pop) {
 		HashMap<Faction, Float> chances = new HashMap<Faction, Float>();
 		float factor;
-		
+
 		for (Faction faction : factions) {
-			factor = (float) Math.max(faction.getSatisfaction()/100 * 0.9 + 0.1, 0.2);
-			chances.put(faction, faction.getSupporter()/pop * factor);
+			factor = (float) Math.max(faction.getSatisfaction() / 100 * 0.9 + 0.1, 0.2);
+			chances.put(faction, faction.getSupporter() / pop * factor);
 		}
-		
+
 		float total = 0;
 		for (float f : chances.values()) {
 			total += f;
 		}
-		
+
 		for (Faction faction : factions) {
-			chances.replace(faction, chances.get(faction)/total);
+			chances.replace(faction, chances.get(faction) / total);
 		}
-		
+
 		return chances;
 	}
 }
