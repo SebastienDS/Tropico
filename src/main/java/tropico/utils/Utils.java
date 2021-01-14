@@ -11,7 +11,10 @@ public class Utils {
      * @return min <= value <= max
      */
     public static int limit(int value, int min, int max) {
-        return Math.max(Math.min(value, min), max);
+    	if (value < min) {
+			return min;
+		}
+		return Math.min(value, max);
     }
 
 }
