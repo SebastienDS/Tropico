@@ -8,8 +8,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Random;
 
 public class Player implements Serializable {
 
@@ -116,6 +117,10 @@ public class Player implements Serializable {
 	public int getSupporterTotal() {
 		return factions.stream().mapToInt(Faction::getSupporter).sum();
 	}
+	
+	public int getTotalSatisfaction() {
+		return factions.stream().mapToInt(Faction::getSatisfaction).sum();
+	}
 
 	/**
 	 * generate Resources
@@ -123,12 +128,73 @@ public class Player implements Serializable {
 	public void generateResources() {
 		resources.generateFood();
 		resources.generateMoney();
+		
 		int pop = getSupporterTotal();
 		int overflow = resources.consumeFood(pop);
+		
 		if (overflow > 0) {
-			// TODO
+			killSupporters(overflow, pop);
 		} else if (resources.hasEnoughFarming(pop)) {
-			// TODO
+			generateNewSupporters(pop);
 		}
+	}
+	
+	private void killSupporters(int overflow, int pop) {
+		Random rd = new Random();
+		float count, rdfloat;
+		for (int i = 0; i < overflow; i++) {
+			rdfloat = rd.nextFloat();
+			count = 0;
+			
+			for (Faction faction : factions) {
+				count += faction.getSupporter()*1.0/pop;
+				if (rdfloat <= count) {
+					faction.killSupporter();
+					break;
+				}
+			}
+		}
+	}
+	
+	private void generateNewSupporters(int pop) {
+		Random rd = new Random();
+		int addedPop = (int) (pop * (rd.nextFloat() * 9 + 1));
+		float count, rdfloat;
+		
+		for (int i = 0; i < addedPop; i++) {
+			rdfloat = rd.nextFloat();
+			count = 0;
+			
+			HashMap<Faction, Float> factionChances = calculateFactionsChances(pop);
+			
+			for (Faction faction : factions) {
+				count += factionChances.get(faction);
+				if (rdfloat <= count) {
+					faction.addSupporter(1);
+					break;
+				}
+			}
+		}
+	}
+	
+	private HashMap<Faction, Float> calculateFactionsChances(int pop) {
+		HashMap<Faction, Float> chances = new HashMap<Faction, Float>();
+		float factor;
+		
+		for (Faction faction : factions) {
+			factor = (float) Math.max(faction.getSatisfaction()/100 * 0.9 + 0.1, 0.2);
+			chances.put(faction, faction.getSupporter()/pop * factor);
+		}
+		
+		float total = 0;
+		for (float f : chances.values()) {
+			total += f;
+		}
+		
+		for (Faction faction : factions) {
+			chances.replace(faction, chances.get(faction)/total);
+		}
+		
+		return chances;
 	}
 }

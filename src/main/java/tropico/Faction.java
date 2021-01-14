@@ -37,7 +37,9 @@ public class Faction implements Serializable {
 	 * @param value
 	 */
 	public void addSatisfaction(int value) {
-		satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
+		if (satisfaction != SATISFACTION_MIN) {
+			satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
+		}
 	}
 
 	public int getSupporter() {
@@ -69,5 +71,10 @@ public class Faction implements Serializable {
 	
 	public boolean isName(String name) {
 		return this.name.equals(name);
+	}
+	
+	public void killSupporter() {
+		supporter--;
+		satisfaction = Utils.limit(satisfaction - 2, SATISFACTION_MIN, SATISFACTION_MAX);
 	}
 }
