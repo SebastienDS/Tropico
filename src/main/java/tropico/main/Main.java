@@ -52,8 +52,8 @@ public class Main {
 		StringBuilder choices = new StringBuilder();
 		choices.append("0) Sauvegarder la partie\n");
 		choices.append("1) Voir les détails des factions\n");
-		choices.append("2) Voir les ressources");
-		choices.append("3) Voir l'évennement");
+		choices.append("2) Voir les ressources\n");
+		choices.append("3) Voir l'évennement\n");
 		choices.append("4) Choisir une action");
 
 		List<Choice> eventChoices;
@@ -63,7 +63,9 @@ public class Main {
 			event = game.getNewEvent();
 			eventChoices = event.getChoices();
 
-			actionChoice(game, sc, event, choices.toString());
+			if (actionChoice(game, sc, event, choices.toString())) {
+				return;
+			}
 
 			int input = getInt(sc, 1, eventChoices.size()) - 1;
 			Choice choice = eventChoices.get(input);
@@ -135,37 +137,41 @@ public class Main {
 		// TODO
 	}
 
-	private static void actionChoice(GameState game, Scanner sc, Event event, String choices) {
+	private static boolean actionChoice(GameState game, Scanner sc, Event event, String choices) {
 		int input;
 
-		System.out.println(choices);
+		System.out.println("\n" + choices);
 		input = getInt(sc, 0, 4);
 		switch (input) {
 		case 0: {
 			saveGame(game);
-			return;
+			return true;
 		}
 		case 1: {
 			List<Faction> factions = game.getPlayer().getFactions();
 			for (Faction faction : factions) {
 				System.out.println(faction);
 			}
+			actionChoice(game, sc, event, choices);
+			break;
 		}
 		case 2: {
 			System.out.println(game.getPlayer().getResourcesAsString());
+			actionChoice(game, sc, event, choices);
+			break;
 		}
 		case 3: {
 			System.out.println(event);
+			actionChoice(game, sc, event, choices);
+			break;
 		}
 		case 4: {
 			System.out.println(event);
-
 			break;
 		}
-		default: {
-			actionChoice(game, sc, event, choices);
 		}
-		}
+		
+		return false;
 	}
 
 }

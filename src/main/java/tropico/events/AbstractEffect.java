@@ -2,7 +2,6 @@ package tropico.events;
 
 abstract class AbstractEffect implements Effect {
 	private final int value;
-	private boolean used = false;
 
 	public AbstractEffect(int value) {
 		this.value = value;
@@ -14,11 +13,6 @@ abstract class AbstractEffect implements Effect {
 	}
 
 	int use() {
-		if (used) {
-			throw new IllegalStateException("L'effet a déjà été utilisé.");
-		}
-		used = true;
-
 		return value;
 	}
 
