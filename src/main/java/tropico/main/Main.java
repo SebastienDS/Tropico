@@ -4,8 +4,10 @@ import tropico.Faction;
 import tropico.GameState;
 import tropico.events.Choice;
 import tropico.events.Event;
+import tropico.utils.Backup;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
@@ -30,7 +32,7 @@ public class Main {
 	 * @throws Exception
 	 */
 	public static GameState menu(Scanner sc) throws Exception {
-		System.out.println("-1) Quitter \n0) Nouvelle partie \n");
+		System.out.println("-1) Quitter \n0) Nouvelle partie \n1) Charger partie");
 
 		int input = getInt(sc, -1, MENU_CHOICES.size());
 		if (input == -1)
@@ -45,7 +47,7 @@ public class Main {
 	 * @param sc the scanner used to interact with the user
 	 * @param game the GameState contains all the informations on the game
 	 */
-	public static void mainLoop(Scanner sc, GameState game) {
+	public static void mainLoop(Scanner sc, GameState game) throws IOException {
 
 		Event event;
 
@@ -63,13 +65,13 @@ public class Main {
 			event = game.getNewEvent();
 			eventChoices = event.getChoices();
 
-			if (actionChoice(game, sc, event, choices.toString())) {
+			if (actionChoice(sc, game, event, choices.toString())) {
 				return;
 			}
 
 			int input = getInt(sc, 1, eventChoices.size()) - 1;
 			Choice choice = eventChoices.get(input);
-			choice.forEach(effect -> System.out.println(effect));
+			choice.forEach(System.out::println);
 			choice.choose(game.getPlayer());
 
 			// check game over
@@ -123,9 +125,8 @@ public class Main {
 	 * 
 	 * @return game loaded
 	 */
-	private static GameState loadGame() {
-		// TODO
-		return null;
+	private static GameState loadGame() throws IOException, ClassNotFoundException {
+		return (GameState) Backup.loadObject("backup/save");
 	}
 
 	/**
@@ -133,11 +134,11 @@ public class Main {
 	 * 
 	 * @param game
 	 */
-	private static void saveGame(GameState game) {
-		// TODO
+	private static void saveGame(GameState game) throws IOException {
+		Backup.saveObject("backup/save", game);
 	}
 
-	private static boolean actionChoice(GameState game, Scanner sc, Event event, String choices) {
+	private static boolean actionChoice(Scanner sc, GameState game, Event event, String choices) throws IOException {
 		int input;
 
 		System.out.println("\n" + choices);
@@ -145,24 +146,24 @@ public class Main {
 		switch (input) {
 		case 0: {
 			saveGame(game);
-			return true;
+			actionChoice(sc, game, event, choices);
+			break;
 		}
 		case 1: {
 			List<Faction> factions = game.getPlayer().getFactions();
-			for (Faction faction : factions) {
-				System.out.println(faction);
-			}
-			actionChoice(game, sc, event, choices);
+
+			factions.forEach(System.out::println);
+			actionChoice(sc, game, event, choices);
 			break;
 		}
 		case 2: {
 			System.out.println(game.getPlayer().getResourcesAsString());
-			actionChoice(game, sc, event, choices);
+			actionChoice(sc, game, event, choices);
 			break;
 		}
 		case 3: {
 			System.out.println(event);
-			actionChoice(game, sc, event, choices);
+			actionChoice(sc, game, event, choices);
 			break;
 		}
 		case 4: {
