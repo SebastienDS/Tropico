@@ -2,7 +2,9 @@ package tropico.events;
 
 import tropico.Player;
 
-public interface Effect {
+import java.io.Serializable;
+
+public interface Effect extends Serializable {
 	
 	public int getValue();
 

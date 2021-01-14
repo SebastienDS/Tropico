@@ -2,7 +2,9 @@ package tropico;
 
 import tropico.utils.Utils;
 
-public class Faction {
+import java.io.Serializable;
+
+public class Faction implements Serializable {
 
 	private static final int SATISFACTION_MIN = 0;
 	private static final int SATISFACTION_MAX = 100;
@@ -15,6 +17,10 @@ public class Faction {
 		this.name = name;
 		this.satisfaction = satisfaction;
 		this.supporter = supporter;
+	}
+
+	public Faction(){
+		this("Anonymous", 0, 0);
 	}
 
 	public String getName() {

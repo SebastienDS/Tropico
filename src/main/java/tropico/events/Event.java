@@ -2,10 +2,11 @@ package tropico.events;
 
 import tropico.Season;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
-public class Event implements Iterable<Choice> {
+public class Event implements Iterable<Choice>, Serializable {
 
     private final String name;
     private final List<Season> seasons;

@@ -1,6 +1,8 @@
 package tropico;
 
-public class Resources {
+import java.io.Serializable;
+
+public class Resources implements Serializable {
 
 	private static final int RESOURCE_MIN = 0;
 	private static final int RESOURCE_MAX = 100;

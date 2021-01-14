@@ -9,12 +9,13 @@ import tropico.events.EventsDeserializer;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public class GameState {
+public class GameState implements Serializable {
 
     private Season season;
     private final Difficulty difficulty;

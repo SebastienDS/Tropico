@@ -6,10 +6,11 @@ import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.List;
 
-public class Player {
+public class Player implements Serializable {
 
 	private final Resources resources = new Resources(0, 0, 0);
 	private final List<Faction> factions;
@@ -82,8 +83,7 @@ public class Player {
 	 * @throws FileNotFoundException
 	 */
 	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>() {
-		}.getType();
+		Type eventType = new TypeToken<List<Faction>>(){}.getType();
 
 		Gson gson = new Gson();
 		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);

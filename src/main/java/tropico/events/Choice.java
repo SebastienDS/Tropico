@@ -1,11 +1,12 @@
 package tropico.events;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import tropico.Player;
 
-public class Choice implements Iterable<Effect> {
+public class Choice implements Iterable<Effect>, Serializable {
 
     private final String label;
     private final ArrayList<Effect> effects;

@@ -1,10 +1,11 @@
 package tropico;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlayerManagement {
+public class PlayerManagement implements Serializable {
 
     private final List<Player> players = new ArrayList<>();
     private int currentPlayer = 0;
