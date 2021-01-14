@@ -75,6 +75,10 @@ public class Main {
 			choice.choose(game.getPlayer());
 
 			// check game over
+			if (game.isGameOver()) {
+				System.out.println("game over");
+				break;
+			}
 			game.nextTurn();
 
 		}

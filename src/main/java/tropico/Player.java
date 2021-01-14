@@ -80,17 +80,19 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * load factions from json file
-	 * 
-	 * @param path The path where the json file is located
-	 * @return List of faction
-	 * @throws FileNotFoundException
+	 * get if the player is dead
+	 * @return true is player is dead
 	 */
-	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>(){}.getType();
+	public boolean isDead() {
+		int thresholdOfDefeat = 10;
+		int sum = 0;
+		int totalSupporter = 0;
 
-		Gson gson = new Gson();
-		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
+		for (Faction faction: factions) {
+			sum += faction.getSatisfaction() * faction.getSupporter();
+			totalSupporter += faction.getSupporter();
+		}
+		return (double)sum / (totalSupporter == 0 ? 1 : totalSupporter) < thresholdOfDefeat;
 	}
 
 	@Override
@@ -198,5 +200,19 @@ public class Player implements Serializable {
 		}
 		
 		return chances;
+	}
+
+	/**
+	 * load factions from json file
+	 *
+	 * @param path The path where the json file is located
+	 * @return List of faction
+	 * @throws FileNotFoundException
+	 */
+	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
+		Type eventType = new TypeToken<List<Faction>>(){}.getType();
+
+		Gson gson = new Gson();
+		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
 	}
 }

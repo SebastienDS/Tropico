@@ -42,6 +42,19 @@ public class PlayerManagement implements Serializable {
         currentPlayer = (currentPlayer + 1) % players.size();
     }
 
+    /**
+     * get if a player is dead
+     * @return true if a player is dead
+     */
+    public boolean havePlayerDead() {
+        for (Player player: players) {
+            if (player.isDead()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return "PlayerManagement{" +
