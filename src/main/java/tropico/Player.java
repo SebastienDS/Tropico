@@ -14,6 +14,8 @@ import java.util.Random;
 
 public class Player implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private final Resources resources = new Resources(0, 0, 0);
 	private final List<Faction> factions;
 

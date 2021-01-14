@@ -7,6 +7,8 @@ import java.util.List;
 
 public class PlayerManagement implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private final List<Player> players = new ArrayList<>();
     private int currentPlayer = 0;
 

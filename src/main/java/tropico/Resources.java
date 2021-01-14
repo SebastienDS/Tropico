@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 public class Resources implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final int RESOURCE_MIN = 0;
 	private static final int RESOURCE_MAX = 100;
 	private static final int FOOD_UNIT_PER_CITIZEN = 4;

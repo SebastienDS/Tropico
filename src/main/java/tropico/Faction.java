@@ -6,6 +6,8 @@ import java.io.Serializable;
 
 public class Faction implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private static final int SATISFACTION_MIN = 0;
 	private static final int SATISFACTION_MAX = 100;
 
