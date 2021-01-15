@@ -81,6 +81,7 @@ public class Player implements Serializable {
 
 	/**
 	 * get if the player is dead
+	 * 
 	 * @return true is player is dead
 	 */
 	public boolean isDead() {
@@ -88,11 +89,11 @@ public class Player implements Serializable {
 		int sum = 0;
 		int totalSupporter = 0;
 
-		for (Faction faction: factions) {
+		for (Faction faction : factions) {
 			sum += faction.getSatisfaction() * faction.getSupporter();
 			totalSupporter += faction.getSupporter();
 		}
-		return (double)sum / (totalSupporter == 0 ? 1 : totalSupporter) < thresholdOfDefeat;
+		return totalSupporter == 0 || (double) sum / totalSupporter < thresholdOfDefeat;
 	}
 
 	@Override
@@ -123,12 +124,10 @@ public class Player implements Serializable {
 		return factions.stream().mapToInt(Faction::getSupporter).sum();
 	}
 
-	public int getTotalSatisfaction() {
-		return factions.stream().mapToInt(Faction::getSatisfaction).sum();
-	}
-
 	/**
 	 * generate Resources
+	 * 
+	 * @return Returns a String representing the resources lost or acquired
 	 */
 	public String generateResources() {
 		StringBuilder str = new StringBuilder();
@@ -159,6 +158,7 @@ public class Player implements Serializable {
 				count += faction.getSupporter() * 1.0 / pop;
 				if (rdfloat <= count) {
 					faction.killSupporter();
+					pop--;
 					break;
 				}
 			}
@@ -217,7 +217,8 @@ public class Player implements Serializable {
 	 * @throws FileNotFoundException
 	 */
 	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>(){}.getType();
+		Type eventType = new TypeToken<List<Faction>>() {
+		}.getType();
 
 		Gson gson = new Gson();
 		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);

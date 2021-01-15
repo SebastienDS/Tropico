@@ -32,13 +32,13 @@ public class Main {
 	 * @throws Exception
 	 */
 	public static GameState menu(Scanner sc) throws Exception {
-		System.out.println("-1) Quitter \n0) Nouvelle partie \n1) Charger partie");
+		System.out.println("1) Nouvelle partie \n2) Charger partie");
 
 		int input = getInt(sc, -1, MENU_CHOICES.size());
-		if (input == -1)
+		if (input == -1 || input == 0)
 			System.exit(0);
 
-		return MENU_CHOICES.get(input).call();
+		return MENU_CHOICES.get(input-1).call();
 	}
 
 	/**
@@ -74,12 +74,12 @@ public class Main {
 			choice.forEach(System.out::println);
 			choice.choose(game.getPlayer());
 
-			// check game over
+			game.nextTurn();
+			
 			if (game.isGameOver()) {
-				System.out.println("game over");
+				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn()-1) + " tours.");
 				break;
 			}
-			game.nextTurn();
 
 		}
 	}
@@ -146,29 +146,29 @@ public class Main {
 		int input;
 
 		System.out.println("\n" + choices);
-		input = getInt(sc, 0, 4);
+		input = getInt(sc, -1, 4);
 		switch (input) {
+		case -1: {
+			return true;
+		}
 		case 0: {
 			saveGame(game);
-			actionChoice(sc, game, event, choices);
-			break;
+			System.out.println("Jeu sauvegardé avec succès.");
+			return actionChoice(sc, game, event, choices);
 		}
 		case 1: {
 			List<Faction> factions = game.getPlayer().getFactions();
 
 			factions.forEach(System.out::println);
-			actionChoice(sc, game, event, choices);
-			break;
+			return actionChoice(sc, game, event, choices);
 		}
 		case 2: {
 			System.out.println(game.getPlayer().getResourcesAsString());
-			actionChoice(sc, game, event, choices);
-			break;
+			return actionChoice(sc, game, event, choices);
 		}
 		case 3: {
 			System.out.println(event);
-			actionChoice(sc, game, event, choices);
-			break;
+			return actionChoice(sc, game, event, choices);
 		}
 		case 4: {
 			System.out.println(event);

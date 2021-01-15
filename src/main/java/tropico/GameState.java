@@ -19,24 +19,26 @@ public class GameState implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    private Season season;
-    private final Difficulty difficulty;
     private final Map<Season, List<Event>> events;
+    private final Difficulty difficulty;
     private final PlayerManagement players;
+    private Season season;
+    private int turn;
 
     public GameState(Season season, Difficulty difficulty) throws FileNotFoundException {
         this.season = season;
         this.difficulty = difficulty;
         events = loadEvents("src/test.json");
         players = new PlayerManagement();
+        turn = 1;
     }
 
     public GameState(Difficulty difficulty) throws FileNotFoundException {
-        this(Season.SUMMER, difficulty);
+        this(Season.SPRING, difficulty);
     }
 
     public GameState() throws FileNotFoundException {
-        this(Season.SUMMER, Difficulty.MEDIUM);
+        this(Season.SPRING, Difficulty.MEDIUM);
     }
 
     public Difficulty getDifficulty() {
@@ -47,15 +49,22 @@ public class GameState implements Serializable {
         return players.getPlayer();
     }
 
-    /**
+    public int getTurn() {
+		return turn;
+	}
+
+	/**
      * next turn
      */
     public void nextTurn() {
     	season = Season.nextSeason(season);
+    	turn++;
+    	
     	if (season.equals(Season.SPRING)) {
 			String str = getPlayer().generateResources();
 			System.out.println("C'est la fin de l'année ! Voici les conséquences :\n" + str);
 		}
+    	
         players.nextTurn();
     }
 
