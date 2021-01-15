@@ -3,6 +3,9 @@ package tropico.events;
 import tropico.Player;
 
 public class FactionSatisfactionEffect extends AbstractEffect {
+
+	private static final long serialVersionUID = 1L;
+	
 	private final String factionName;
 	
 	public FactionSatisfactionEffect(String faction, int value) {

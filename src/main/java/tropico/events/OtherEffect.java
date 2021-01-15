@@ -3,6 +3,9 @@ package tropico.events;
 import tropico.Player;
 
 public class OtherEffect extends AbstractEffect {
+
+	private static final long serialVersionUID = 1L;
+
 	public static enum types {
 		INDUSTRY, FARMING, TREASURY, FOODUNIT
 	};

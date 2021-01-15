@@ -3,6 +3,9 @@ package tropico.events;
 import tropico.Player;
 
 public class SupporterNumberEffect extends AbstractEffect {
+
+	private static final long serialVersionUID = 1L;
+	
 	private final String factionName;
 	private final boolean percentage;
 

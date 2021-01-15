@@ -13,9 +13,6 @@ public class Backup {
      * @throws IOException
      */
     public static void saveObject(String src, Object obj) throws IOException {
-        File file = new File(src);
-        // file.createNewFile();
-//        file.getParentFile().mkdirs();
         Path path = Path.of(src);
 
         try (OutputStream back = Files.newOutputStream(path);
