@@ -21,7 +21,7 @@ public class Faction implements Serializable {
 		this.supporter = supporter;
 	}
 
-	public Faction(){
+	public Faction() {
 		this("Anonymous", 0, 0);
 	}
 
@@ -33,19 +33,27 @@ public class Faction implements Serializable {
 		return satisfaction;
 	}
 
+	public int getSupporter() {
+		return supporter;
+	}
+
+	public int getBribeCost() {
+		return supporter * 15;
+	}
+
+	public boolean hasZeroSatisfaction() {
+		return satisfaction == SATISFACTION_MIN;
+	}
+
 	/**
 	 * add satisfaction to the faction
 	 * 
 	 * @param value
 	 */
 	public void addSatisfaction(int value) {
-		if (satisfaction != SATISFACTION_MIN) {
+		if (!hasZeroSatisfaction()) {
 			satisfaction = Utils.limit(satisfaction + value, SATISFACTION_MIN, SATISFACTION_MAX);
 		}
-	}
-
-	public int getSupporter() {
-		return supporter;
 	}
 
 	/**
@@ -66,16 +74,19 @@ public class Faction implements Serializable {
 		supporter += supporter * percentage / 100;
 	}
 
+	public boolean isName(String name) {
+		return this.name.equals(name);
+	}
+
 	@Override
 	public String toString() {
 		return name + " : " + satisfaction + "% / " + supporter;
 	}
-	
-	public boolean isName(String name) {
-		return this.name.equals(name);
-	}
-	
+
 	public void killSupporter() {
+		if (supporter <= 0) {
+			throw new IllegalStateException("La faction est n'a déjà plus aucun partisans.");
+		}
 		supporter--;
 		satisfaction = Utils.limit(satisfaction - 2, SATISFACTION_MIN, SATISFACTION_MAX);
 	}

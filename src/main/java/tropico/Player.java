@@ -4,10 +4,15 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+import tropico.events.FactionSatisfactionEffect;
+import tropico.events.OtherEffect;
+import tropico.events.OtherEffect.types;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -27,6 +32,16 @@ public class Player implements Serializable {
 		return List.copyOf(factions);
 	}
 
+	public List<Faction> getSatisfiedFactions() {
+		ArrayList<Faction> fList = new ArrayList<Faction>();
+		for (Faction faction : factions) {
+			if (!faction.hasZeroSatisfaction()) {
+				fList.add(faction);
+			}
+		}
+		return List.copyOf(fList);
+	}
+
 	public int getIndustry() {
 		return resources.getIndustry();
 	}
@@ -41,6 +56,36 @@ public class Player implements Serializable {
 
 	public int getFoodUnit() {
 		return resources.getFoodUnit();
+	}
+
+	public Faction getFactionFromName(String factionName) {
+		for (Faction faction : factions) {
+			if (faction.isName(factionName)) {
+				return faction;
+			}
+		}
+
+		throw new IllegalArgumentException("Le nom n'est pas dans les factions existantes.");
+	}
+
+	public String getResourcesAsString() {
+		return resources.toString();
+	}
+
+	/**
+	 * get total supporters of every factions
+	 *
+	 * @return total supporter
+	 */
+	public int getSupporterTotal() {
+		return factions.stream().mapToInt(Faction::getSupporter).sum();
+	}
+
+	public int getBribeCost(Faction f) {
+		if (!factions.contains(f)) {
+			throw new IllegalArgumentException("La faction n'existe pas.");
+		}
+		return f.getBribeCost();
 	}
 
 	/**
@@ -96,32 +141,52 @@ public class Player implements Serializable {
 		return totalSupporter == 0 || (double) sum / totalSupporter < thresholdOfDefeat;
 	}
 
+	public boolean bribe(Faction f) {
+		if (!factions.contains(f)) {
+			throw new IllegalArgumentException("La faction n'existe pas.");
+		}
+		int bribeCost = f.getBribeCost();
+
+		if (bribeCost > resources.getTreasury()) {
+			return false;
+		}
+
+		FactionSatisfactionEffect effect1 = new FactionSatisfactionEffect(f.getName(), 10);
+		System.out.println(effect1);
+		effect1.applyEffect(this);
+
+		// TODO better way ?
+		FactionSatisfactionEffect effect2 = new FactionSatisfactionEffect("loyalistes", bribeCost / 10);
+		System.out.println(effect2);
+		effect2.applyEffect(this);
+
+		resources.addMoney(-bribeCost);
+
+		return true;
+	}
+
+	public void buyFood(int unit) {
+		int cost = unit * 8;
+		if (cost > getTreasury()) {
+			throw new IllegalArgumentException("Pas assez d'argent pour acheter autant.");
+		}
+		if (unit <= 0) {
+			throw new IllegalArgumentException("Le nombre d'unité doit être supérieur à 0.");
+		}
+
+		OtherEffect effect1 = new OtherEffect(types.FOODUNIT, unit);
+		System.out.println(effect1);
+		effect1.applyEffect(this);
+
+		OtherEffect effect2 = new OtherEffect(types.TREASURY, -cost);
+		System.out.println(effect2);
+		effect2.applyEffect(this);
+
+	}
+
 	@Override
 	public String toString() {
 		return "Player{" + "resources=" + resources + ", factions=" + factions + '}';
-	}
-
-	public Faction getFactionFromName(String factionName) {
-		for (Faction faction : factions) {
-			if (faction.isName(factionName)) {
-				return faction;
-			}
-		}
-
-		throw new IllegalArgumentException("Le nom n'est pas dans les factions existantes.");
-	}
-
-	public String getResourcesAsString() {
-		return resources.toString();
-	}
-
-	/**
-	 * get total supporters of every factions
-	 *
-	 * @return total supporter
-	 */
-	public int getSupporterTotal() {
-		return factions.stream().mapToInt(Faction::getSupporter).sum();
 	}
 
 	/**
