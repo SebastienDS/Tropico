@@ -14,11 +14,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.concurrent.Callable;
 
 public class Main {
-
-	private static List<Callable<GameState>> MENU_CHOICES = List.of(Main::newGame, Main::loadGame);
 
 	public static void main(String[] args) throws Exception {
 
@@ -38,11 +35,16 @@ public class Main {
 	public static GameState menu(Scanner sc) throws Exception {
 		System.out.println("1) Nouvelle partie \n2) Charger partie");
 
-		int input = getInt(sc, -1, MENU_CHOICES.size());
-		if (input == -1 || input == 0)
-			System.exit(0);
-
-		return MENU_CHOICES.get(input - 1).call();
+		int input = getInt(sc, -1, 2);
+		if (input == 1) {
+			return newGame(sc);
+		} 
+		if (input == 2) {
+			return loadGame();
+		}
+		
+		System.exit(0);
+		return null;
 	}
 
 	/**
@@ -147,8 +149,13 @@ public class Main {
 	 * @return new game
 	 * @throws FileNotFoundException
 	 */
-	private static GameState newGame() throws FileNotFoundException {
-		DifficultySingleton.getDifficulty(Difficulty.HARD);
+	private static GameState newGame(Scanner sc) throws FileNotFoundException {
+		System.out.println("Dans quelle difficulté souhaitez-vous jouer ?\n1) Facile\n2) Moyen\n3) Difficile");
+		List<Difficulty> lst = List.of(Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD);
+		
+		int input = getInt(sc, 1, 3);
+		
+		DifficultySingleton.getDifficulty(lst.get(input-1));
 		return new GameState();
 	}
 

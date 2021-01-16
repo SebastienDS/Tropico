@@ -18,92 +18,95 @@ import java.util.Random;
 
 public class GameState implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final Map<Season, List<Event>> events;
-    private final PlayerManagement players;
-    private Event currentEvent;
-    private Season season;
-    private int turn;
+	private final Map<Season, List<Event>> events;
+	private final PlayerManagement players;
+	private Event currentEvent;
+	private Season season;
+	private int turn;
 
-    public GameState(Season season) throws FileNotFoundException {
-        this.season = season;
-        
-        List<Faction> factions = UtilsDeserialization.loadFactions("src/main/resources/factions.json");
-        
-        players = new PlayerManagement(factions);
-        events = loadEvents(factions, "src/main/resources/scenario/test.json");
-        currentEvent = newEvent();
-        turn = 1;
-    }
+	public GameState(Season season) throws FileNotFoundException {
+		this.season = season;
 
-    public GameState() throws FileNotFoundException {
-        this(Season.SPRING);
-    }
+		List<Faction> factions = UtilsDeserialization.loadFactions("src/main/resources/factions.json");
 
-    public Player getPlayer() {
-        return players.getPlayer();
-    }
+		players = new PlayerManagement(factions);
+		events = loadEvents(factions, "src/main/resources/scenario/test.json");
+		currentEvent = newEvent();
+		turn = 1;
+	}
 
-    public int getTurn() {
+	public GameState() throws FileNotFoundException {
+		this(Season.SPRING);
+	}
+
+	public Player getPlayer() {
+		return players.getPlayer();
+	}
+
+	public int getTurn() {
 		return turn;
 	}
 
-    public Event getCurrentEvent() {
+	public Event getCurrentEvent() {
 		return currentEvent;
 	}
 
 	/**
-     * get a new random event
-     * @return random Event
-     */
-    private Event newEvent() {
-        Random rand = new Random();
-        List<Event> list = events.get(season);
-        return list.get(rand.nextInt(list.size()));
-    }
-    
-    /**
-     * next turn
-     */
-    public void nextTurn() {
-    	season = Season.nextSeason(season);
-    	currentEvent = newEvent();
-    	turn++;
-    	
-        players.nextTurn();
-    }
-    
-    public boolean isEndOfYear() {
-    	return season.equals(Season.WINTER);
-    }
+	 * get a new random event
+	 * 
+	 * @return random Event
+	 */
+	private Event newEvent() {
+		Random rand = new Random();
+		List<Event> list = events.get(season);
+		return list.get(rand.nextInt(list.size()));
+	}
 
-    /**
-     * check if the game is over
-     * @return true if a player is dead
-     */
-    public boolean isGameOver() {
-        return players.havePlayerDead();
-    }
+	/**
+	 * next turn
+	 */
+	public void nextTurn() {
+		season = Season.nextSeason(season);
+		currentEvent = newEvent();
+		turn++;
 
-    /**
-     * load Events from json file
-     * @param eventsPath
-     * @return Map with events for each season
-     * @throws FileNotFoundException
-     */
-    private static Map<Season, List<Event>> loadEvents(List<Faction> factions, String eventsPath) throws FileNotFoundException {
-        Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
+		players.nextTurn();
+	}
 
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(eventType, new UtilsDeserialization(factions))
-                .create();
+	public boolean isEndOfYear() {
+		return season.equals(Season.WINTER);
+	}
 
-        return gson.fromJson(new JsonReader(new FileReader(eventsPath)), eventType);
-    }
+	/**
+	 * check if the game is over
+	 * 
+	 * @return true if a player is dead
+	 */
+	public boolean isGameOver() {
+		return players.havePlayerDead();
+	}
 
-    @Override
-    public String toString() {
-        return "season=" + season;
-    }
+	/**
+	 * load Events from json file
+	 * 
+	 * @param eventsPath
+	 * @return Map with events for each season
+	 * @throws FileNotFoundException
+	 */
+	private static Map<Season, List<Event>> loadEvents(List<Faction> factions, String eventsPath)
+			throws FileNotFoundException {
+		Type eventType = new TypeToken<Map<Season, List<Event>>>() {
+		}.getType();
+
+		Gson gson = new GsonBuilder().registerTypeAdapter(eventType, new UtilsDeserialization(factions)).create();
+
+		return gson.fromJson(new JsonReader(new FileReader(eventsPath)), eventType);
+	}
+
+	@Override
+	public String toString() {
+		return "season=" + season;
+	}
 }

@@ -138,7 +138,7 @@ public class Player implements Serializable {
 		default:
 			throw new IllegalStateException("La difficulté n'existe pas.");
 		}
-		
+
 		int sum = 0;
 		int totalSupporter = 0;
 
@@ -232,7 +232,7 @@ public class Player implements Serializable {
 				if (rdfloat <= count) {
 					faction.killSupporter();
 					pop--;
-					factions.forEach(f->f.addSatisfaction(-2));
+					factions.forEach(f -> f.addSatisfaction(-2));
 					break;
 				}
 			}

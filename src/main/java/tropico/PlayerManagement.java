@@ -7,52 +7,51 @@ import java.util.List;
 
 public class PlayerManagement implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final List<Player> players = new ArrayList<>();
-    private int currentPlayer = 0;
+	private final List<Player> players = new ArrayList<>();
+	private int currentPlayer = 0;
 
-    public PlayerManagement(List<Faction> factions, int count) throws FileNotFoundException {
-        if (count <= 0) throw new IllegalStateException("Must have players");
-        
-        for (int i = 0; i < count; i++) {
-        	players.add(new Player(factions));
-        }
-    }
+	public PlayerManagement(List<Faction> factions, int count) throws FileNotFoundException {
+		if (count <= 0)
+			throw new IllegalStateException("Must have players");
 
-    public PlayerManagement(List<Faction> factions) throws FileNotFoundException {
-        this(factions, 1);
-    }
+		for (int i = 0; i < count; i++) {
+			players.add(new Player(factions));
+		}
+	}
 
-    public Player getPlayer() {
-        return players.get(currentPlayer);
-    }
+	public PlayerManagement(List<Faction> factions) throws FileNotFoundException {
+		this(factions, 1);
+	}
 
-    /**
-     * set the next player
-     */
-    public void nextTurn() {
-        currentPlayer = (currentPlayer + 1) % players.size();
-    }
+	public Player getPlayer() {
+		return players.get(currentPlayer);
+	}
 
-    /**
-     * Searches if a player is dead
-     * @return Returns true if a player lost, false if not
-     */
-    public boolean havePlayerDead() {
-        for (Player player: players) {
-            if (player.isDead()) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * set the next player
+	 */
+	public void nextTurn() {
+		currentPlayer = (currentPlayer + 1) % players.size();
+	}
 
-    @Override
-    public String toString() {
-        return "PlayerManagement{" +
-                "players=" + players +
-                ", currentPlayer=" + currentPlayer +
-                '}';
-    }
+	/**
+	 * Searches if a player is dead
+	 * 
+	 * @return Returns true if a player lost, false if not
+	 */
+	public boolean havePlayerDead() {
+		for (Player player : players) {
+			if (player.isDead()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public String toString() {
+		return "PlayerManagement{" + "players=" + players + ", currentPlayer=" + currentPlayer + '}';
+	}
 }

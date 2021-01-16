@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<Event>>> {
-	
+
 	private List<Faction> factions;
 
 	public UtilsDeserialization(List<Faction> factions) {
@@ -171,7 +171,7 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 			throw new IllegalStateException(effect.get("resource") + " is not a valid resource");
 		int value = effect.get("value").getAsInt();
 		float multiplier = 1;
-		
+
 		switch (DifficultySingleton.getDifficulty()) {
 		case EASY:
 			multiplier = 0.5f;
@@ -213,10 +213,10 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 			for (Faction f : factions) {
 				effects.add(new SupporterNumberEffect(f.getName(), value, percentage));
 			}
-			
+
 			return effects;
 		}
-		
+
 		if (!existsFaction(faction)) {
 			throw new IllegalArgumentException("La faction \"" + faction + "\" n'existe pas.");
 		}
@@ -234,30 +234,30 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 	private List<Effect> deserializeSatisfactionEffect(JsonObject effect, JsonDeserializationContext context) {
 		String faction = effect.get("faction").getAsString();
 		int value = effect.get("value").getAsInt();
-		
+
 		if (faction.equals("all")) {
 			List<Effect> effects = new ArrayList<Effect>();
 			for (Faction f : factions) {
 				effects.add(new FactionSatisfactionEffect(f.getName(), value));
 			}
-			
+
 			return effects;
 		}
-		
+
 		if (!existsFaction(faction)) {
 			throw new IllegalArgumentException("La faction \"" + faction + "\" n'existe pas.");
 		}
 
 		return List.of(new FactionSatisfactionEffect(faction, value));
 	}
-	
+
 	private boolean existsFaction(String factionName) {
 		for (Faction faction : factions) {
 			if (faction.isName(factionName)) {
 				return true;
 			}
 		}
-		
+
 		return false;
 	}
 
