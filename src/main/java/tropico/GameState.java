@@ -29,10 +29,10 @@ public class GameState implements Serializable {
     public GameState(Season season) throws FileNotFoundException {
         this.season = season;
         
-        List<Faction> factions = UtilsDeserialization.loadFactions("src/factions.json");
+        List<Faction> factions = UtilsDeserialization.loadFactions("src/main/resources/factions.json");
         
         players = new PlayerManagement(factions);
-        events = loadEvents(factions, "src/test.json");
+        events = loadEvents(factions, "src/main/resources/scenario/test.json");
         currentEvent = newEvent();
         turn = 1;
     }
