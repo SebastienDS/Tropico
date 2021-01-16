@@ -63,6 +63,9 @@ public class Faction implements Serializable {
 	 */
 	public void addSupporter(int count) {
 		supporter += count;
+		if (supporter < 0) {
+			supporter = 0;
+		}
 	}
 
 	/**
@@ -72,6 +75,9 @@ public class Faction implements Serializable {
 	 */
 	public void addSupporterPercentage(int percentage) {
 		supporter += supporter * percentage / 100;
+		if (supporter < 0) {
+			supporter = 0;
+		}
 	}
 
 	public boolean isName(String name) {
@@ -84,10 +90,9 @@ public class Faction implements Serializable {
 	}
 
 	public void killSupporter() {
-		if (supporter <= 0) {
+		if (supporter == 0) {
 			throw new IllegalStateException("La faction est n'a déjà plus aucun partisans.");
 		}
 		supporter--;
-		satisfaction = Utils.limit(satisfaction - 2, SATISFACTION_MIN, SATISFACTION_MAX);
 	}
 }

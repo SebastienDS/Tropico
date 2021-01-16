@@ -21,7 +21,7 @@ public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Resources resources = new Resources(0, 0, 0);
+	private final Resources resources = new Resources(15, 15, 200);
 	private final List<Faction> factions;
 
 	public Player() throws FileNotFoundException {
@@ -224,6 +224,7 @@ public class Player implements Serializable {
 				if (rdfloat <= count) {
 					faction.killSupporter();
 					pop--;
+					factions.forEach(f->f.addSatisfaction(-2));
 					break;
 				}
 			}
