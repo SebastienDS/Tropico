@@ -22,23 +22,25 @@ public class GameState implements Serializable {
 
 	private final Map<Season, List<Event>> events;
 	private final PlayerManagement players;
+	private final String gamemode;
 	private Event currentEvent;
 	private Season season;
 	private int turn;
 
-	public GameState(Season season) throws FileNotFoundException {
-		this.season = season;
+	public GameState(String gamemode) throws FileNotFoundException {
+		this.season = Season.SPRING;
+		this.gamemode = gamemode;
+		String path = "src/main/resources/scenarios/" + gamemode + "/";
 
-		List<Faction> factions = UtilsDeserialization.loadFactions("src/main/resources/factions.json");
-
-		players = new PlayerManagement(factions);
-		events = loadEvents(factions, "src/main/resources/scenario/test.json");
+		players = new PlayerManagement(path);
+		List<Faction> factions = getPlayer().getFactions();
+		events = loadEvents(factions, path + "events.json");
 		currentEvent = newEvent();
 		turn = 1;
 	}
-
+	
 	public GameState() throws FileNotFoundException {
-		this(Season.SPRING);
+		this("bac_a_sable");
 	}
 
 	public Player getPlayer() {
@@ -51,6 +53,10 @@ public class GameState implements Serializable {
 
 	public Event getCurrentEvent() {
 		return currentEvent;
+	}
+
+	public String getGamemode() {
+		return gamemode;
 	}
 
 	/**

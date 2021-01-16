@@ -15,11 +15,12 @@ public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Resources resources = new Resources(15, 15, 200);
+	private final Resources resources;
 	private final List<Faction> factions;
 
-	public Player(List<Faction> factions) throws FileNotFoundException {
+	public Player(List<Faction> factions, Resources resources) throws FileNotFoundException {
 		this.factions = factions;
+		this.resources = resources;
 	}
 
 	public List<Faction> getFactions() {

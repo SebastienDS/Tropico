@@ -15,10 +15,11 @@ public class Resources implements Serializable {
 	private int treasury;
 	private int foodUnit;
 
-	public Resources(int industry, int farming, int treasury) {
+	public Resources(int industry, int farming, int treasury, int foodUnit) {
 		this.industry = industry;
 		this.farming = farming;
 		this.treasury = treasury;
+		this.foodUnit = foodUnit;
 	}
 
 	public int getIndustry() {

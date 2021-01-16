@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import tropico.events.*;
 import tropico.DifficultySingleton;
 import tropico.Faction;
+import tropico.Resources;
 import tropico.Season;
 
 import java.io.FileNotFoundException;
@@ -270,6 +271,21 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 	 */
 	public static List<Faction> loadFactions(String path) throws FileNotFoundException {
 		Type eventType = new TypeToken<List<Faction>>() {
+		}.getType();
+
+		Gson gson = new Gson();
+		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
+	}
+	
+	/**
+	 * Loads resources from a json file
+	 *
+	 * @param path The path where the json file is located
+	 * @return Returns a Resources object
+	 * @throws FileNotFoundException
+	 */
+	public static Resources loadResources(String path) throws FileNotFoundException {
+		Type eventType = new TypeToken<Resources>() {
 		}.getType();
 
 		Gson gson = new Gson();

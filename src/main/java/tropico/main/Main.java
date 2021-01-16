@@ -9,8 +9,13 @@ import tropico.events.Choice;
 import tropico.events.Event;
 import tropico.utils.Backup;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -30,9 +35,11 @@ public class Main {
 	 * 
 	 * @param sc the scanner used to interact with the user
 	 * @return GameState a new GameState
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 * @throws Exception
 	 */
-	public static GameState menu(Scanner sc) throws Exception {
+	public static GameState menu(Scanner sc) throws IOException, ClassNotFoundException {
 		System.out.println("1) Nouvelle partie \n2) Charger partie");
 
 		int input = getInt(sc, -1, 2);
@@ -40,7 +47,7 @@ public class Main {
 			return newGame(sc);
 		} 
 		if (input == 2) {
-			return loadGame();
+			return loadGame(sc);
 		}
 		
 		System.exit(0);
@@ -147,16 +154,17 @@ public class Main {
 	 * create a new Game
 	 * 
 	 * @return new game
-	 * @throws FileNotFoundException
+	 * @throws IOException 
 	 */
-	private static GameState newGame(Scanner sc) throws FileNotFoundException {
+	private static GameState newGame(Scanner sc) throws IOException {
+		String gamemode = gamemodeChoice(sc);
 		System.out.println("Dans quelle difficulté souhaitez-vous jouer ?\n1) Facile\n2) Moyen\n3) Difficile");
 		List<Difficulty> lst = List.of(Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD);
 		
 		int input = getInt(sc, 1, 3);
 		
 		DifficultySingleton.getDifficulty(lst.get(input-1));
-		return new GameState();
+		return new GameState(gamemode);
 	}
 
 	/**
@@ -164,8 +172,41 @@ public class Main {
 	 * 
 	 * @return game loaded
 	 */
-	private static GameState loadGame() throws IOException, ClassNotFoundException {
-		return (GameState) Backup.loadObject("backup/save");
+	private static GameState loadGame(Scanner sc) throws IOException, ClassNotFoundException {
+		String gamemode = gamemodeChoice(sc);
+		String path = "src/main/resources/backup/" + gamemode + "_save";
+		if (!(new File(path)).isFile()) {
+			System.out.println("Aucune sauvegarde trouvée pour ce mode de jeu.");
+			System.out.println("Retour au menu principal.");
+			return menu(sc);
+		}
+		return (GameState) Backup.loadObject(path);
+	}
+	
+	private static String gamemodeChoice(Scanner sc) throws IOException {
+		System.out.println("Choisissez un mode de jeu.");
+		ArrayList<String> modes = new ArrayList<String>();
+
+		// Opening the file containing the names of the different scenarios
+        InputStream file = Files.newInputStream(Path.of("src/main/resources/scenarios/scenarios.txt"));
+        BufferedReader reader = new BufferedReader(new InputStreamReader(file));
+        
+        String line;
+        String[] splitedLine;
+        int count = 0;
+        
+        while((line = reader.readLine()) != null){
+        	count++;
+        	splitedLine = line.split(":");
+            System.out.println(count + ") " + splitedLine[0]);
+            modes.add(splitedLine[1]);
+        }
+        
+        file.close();
+		
+		int input = getInt(sc, 1, count);
+		
+		return modes.get(input-1);
 	}
 
 	/**
@@ -174,7 +215,7 @@ public class Main {
 	 * @param game
 	 */
 	private static void saveGame(GameState game) throws IOException {
-		Backup.saveObject("backup/save", game);
+		Backup.saveObject("src/main/resources/backup/" + game.getGamemode() + "_save", game);
 	}
 
 	/**
