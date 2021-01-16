@@ -71,19 +71,15 @@ public class Main {
 			choice.choose(game.getPlayer());
 
 			if (game.isGameOver()) {
-				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn()) + " tours.");
-				break;
-			}
-
-			if (endOfYearChoice(sc, game, choicesStr.get(1))) {
+				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn() - 1) + " tours.");
 				return;
 			}
-			game.nextTurn();
 
-			if (game.isGameOver()) {
-				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn() - 1) + " tours.");
-				break;
+			if (game.isEndOfYear() && endOfYear(sc, game, choicesStr.get(1))) {
+				return;
 			}
+
+			game.nextTurn();
 
 		}
 	}
@@ -219,15 +215,34 @@ public class Main {
 		return false;
 	}
 
+	private static boolean endOfYear(Scanner sc, GameState game, String choices) throws IOException {
+		if (!game.isEndOfYear()) {
+			throw new IllegalStateException("Fin d'année au mauvais moment");
+		}
+		if (endOfYearChoice(sc, game, choices)) {
+			return true;
+		}
+
+		String str = game.getPlayer().generateResources();
+		System.out.println("C'est la fin de l'année ! Voici les conséquences :\n" + str);
+
+		if (game.isGameOver()) {
+			System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn()) + " tours.");
+			return true;
+		}
+
+		return false;
+	}
+
 	private static boolean endOfYearChoice(Scanner sc, GameState game, String choices) throws IOException {
 		int input;
 		Player p = game.getPlayer();
 
 		System.out.println("\n" + choices);
-		
+
 		System.out.println("\nVous possédez actuellement " + p.getTreasury() + "$");
 		input = getInt(sc, -1, 5);
-		
+
 		switch (input) {
 		case -1: {
 			return true;
@@ -285,25 +300,25 @@ public class Main {
 		}
 
 	}
-	
+
 	private static void marketChoice(Scanner sc, GameState game) {
 		Player p = game.getPlayer();
 		int max = p.getTreasury() / 8;
-		
+
 		if (max == 0) {
 			System.out.println("Vous n'avez pas assez d'argent pour acheter de la nourriture.");
 			return;
 		}
-		
+
 		System.out.println("Vous avez actuellement " + p.getFoodUnit() + " unités de nourriture.");
 		System.out.println("Combien souhaitez-vous en acheter ? (max:" + max + ")");
-		
+
 		int input = getInt(sc, 0, max);
-		
+
 		if (input == 0) {
 			return;
 		}
-		
+
 		p.buyFood(input);
 	}
 

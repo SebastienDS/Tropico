@@ -53,21 +53,6 @@ public class GameState implements Serializable {
 		return turn;
 	}
 
-	/**
-     * next turn
-     */
-    public void nextTurn() {
-    	season = Season.nextSeason(season);
-    	turn++;
-    	
-    	if (season.equals(Season.SPRING)) {
-			String str = getPlayer().generateResources();
-			System.out.println("C'est la fin de l'année ! Voici les conséquences :\n" + str);
-		}
-    	
-        players.nextTurn();
-    }
-
     /**
      * get a new random event
      * @return random Event
@@ -76,6 +61,20 @@ public class GameState implements Serializable {
         Random rand = new Random();
         List<Event> list = events.get(season);
         return list.get(rand.nextInt(list.size()));
+    }
+    
+    /**
+     * next turn
+     */
+    public void nextTurn() {
+    	season = Season.nextSeason(season);
+    	turn++;
+    	
+        players.nextTurn();
+    }
+    
+    public boolean isEndOfYear() {
+    	return season.equals(Season.WINTER);
     }
 
     /**
