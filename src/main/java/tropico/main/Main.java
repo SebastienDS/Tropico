@@ -1,5 +1,6 @@
 package tropico.main;
 
+import tropico.DifficultySingleton;
 import tropico.Faction;
 import tropico.GameState;
 import tropico.Player;
@@ -146,6 +147,7 @@ public class Main {
 	 * @throws FileNotFoundException
 	 */
 	private static GameState newGame() throws FileNotFoundException {
+		DifficultySingleton.getDifficulty();
 		return new GameState();
 	}
 

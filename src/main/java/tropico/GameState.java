@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+
 import tropico.events.Event;
 import tropico.utils.UtilsDeserialization;
 
@@ -20,15 +21,13 @@ public class GameState implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final Map<Season, List<Event>> events;
-    private final Difficulty difficulty;
     private final PlayerManagement players;
     private Event currentEvent;
     private Season season;
     private int turn;
 
-    public GameState(Season season, Difficulty difficulty) throws FileNotFoundException {
+    public GameState(Season season) throws FileNotFoundException {
         this.season = season;
-        this.difficulty = difficulty;
         
         List<Faction> factions = UtilsDeserialization.loadFactions("src/factions.json");
         
@@ -38,16 +37,8 @@ public class GameState implements Serializable {
         turn = 1;
     }
 
-    public GameState(Difficulty difficulty) throws FileNotFoundException {
-        this(Season.SPRING, difficulty);
-    }
-
     public GameState() throws FileNotFoundException {
-        this(Season.SPRING, Difficulty.MEDIUM);
-    }
-
-    public Difficulty getDifficulty() {
-        return difficulty;
+        this(Season.SPRING);
     }
 
     public Player getPlayer() {

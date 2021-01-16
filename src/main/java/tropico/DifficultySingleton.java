@@ -1,15 +1,22 @@
 package tropico;
 
-public enum Difficulty {
-    EASY(0.5), MEDIUM(1), HARD(2);
+public final class DifficultySingleton {
+	public static enum Difficulty {EASY, MEDIUM, HARD};
 
-    private final double multiplicator;
+    private static Difficulty difficulty;
 
-    Difficulty(double multiplicator) {
-        this.multiplicator = multiplicator;
+    private DifficultySingleton(Difficulty difficulty) {
+    	DifficultySingleton.difficulty = difficulty;
     }
-
-    public double getMultiplicator() {
-        return multiplicator;
+    
+    public static Difficulty getDifficulty(Difficulty d) {
+    	if (difficulty == null) {
+    		new DifficultySingleton(d);
+		}
+    	return difficulty;
+    }
+    
+    public static Difficulty getDifficulty() {
+    	return getDifficulty(Difficulty.MEDIUM);
     }
 }
