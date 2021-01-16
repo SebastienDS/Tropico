@@ -30,10 +30,10 @@ public class GameState implements Serializable {
         this.season = season;
         this.difficulty = difficulty;
         
-        List<Faction> factions = UtilsDeserialization.loadFactions("src/factions.json");
+        List<Faction> factions = UtilsDeserialization.loadFactions("src/main/resources/factions.json");
         
         players = new PlayerManagement(factions);
-        events = loadEvents(factions, "src/test.json");
+        events = loadEvents(factions, "src/main/resources/scenario/test.json");
         currentEvent = newEvent();
         turn = 1;
     }

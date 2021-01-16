@@ -19,10 +19,10 @@ public class Test {
     	Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
 
     	Gson gson = new GsonBuilder()
-    			.registerTypeAdapter(eventType, new UtilsDeserialization(UtilsDeserialization.loadFactions("src/factions.json")))
+    			.registerTypeAdapter(eventType, new UtilsDeserialization(UtilsDeserialization.loadFactions("src/main/resources/factions.json")))
     			.create();
 
-    	Map<Season, List<Event>> eventsMap = gson.fromJson(new JsonReader(new FileReader("src/test.json")), eventType);
+    	Map<Season, List<Event>> eventsMap = gson.fromJson(new JsonReader(new FileReader("src/main/resources/scenario/test.json")), eventType);
 
     	eventsMap.forEach((k, v) -> System.out.printf("%s : %s | ", k, v));
 
