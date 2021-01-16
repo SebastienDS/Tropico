@@ -1,17 +1,11 @@
 package tropico;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.google.gson.stream.JsonReader;
-
 import tropico.events.FactionSatisfactionEffect;
 import tropico.events.OtherEffect;
 import tropico.events.OtherEffect.types;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.Serializable;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,8 +18,8 @@ public class Player implements Serializable {
 	private final Resources resources = new Resources(15, 15, 200);
 	private final List<Faction> factions;
 
-	public Player() throws FileNotFoundException {
-		factions = loadFactions("src/factions.json");
+	public Player(List<Faction> factions) throws FileNotFoundException {
+		this.factions = factions;
 	}
 
 	public List<Faction> getFactions() {
@@ -275,18 +269,4 @@ public class Player implements Serializable {
 		return chances;
 	}
 
-	/**
-	 * load factions from json file
-	 *
-	 * @param path The path where the json file is located
-	 * @return List of faction
-	 * @throws FileNotFoundException
-	 */
-	private static List<Faction> loadFactions(String path) throws FileNotFoundException {
-		Type eventType = new TypeToken<List<Faction>>() {
-		}.getType();
-
-		Gson gson = new Gson();
-		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
-	}
 }

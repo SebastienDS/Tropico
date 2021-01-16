@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import tropico.events.Event;
-import tropico.events.EventsDeserializer;
+import tropico.utils.UtilsDeserialization;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,9 +29,12 @@ public class GameState implements Serializable {
     public GameState(Season season, Difficulty difficulty) throws FileNotFoundException {
         this.season = season;
         this.difficulty = difficulty;
-        events = loadEvents("src/test.json");
+        
+        List<Faction> factions = UtilsDeserialization.loadFactions("src/factions.json");
+        
+        players = new PlayerManagement(factions);
+        events = loadEvents(factions, "src/test.json");
         currentEvent = newEvent();
-        players = new PlayerManagement();
         turn = 1;
     }
 
@@ -98,11 +101,11 @@ public class GameState implements Serializable {
      * @return Map with events for each season
      * @throws FileNotFoundException
      */
-    private static Map<Season, List<Event>> loadEvents(String eventsPath) throws FileNotFoundException {
+    private static Map<Season, List<Event>> loadEvents(List<Faction> factions, String eventsPath) throws FileNotFoundException {
         Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
 
         Gson gson = new GsonBuilder()
-                .registerTypeAdapter(eventType, new EventsDeserializer())
+                .registerTypeAdapter(eventType, new UtilsDeserialization(factions))
                 .create();
 
         return gson.fromJson(new JsonReader(new FileReader(eventsPath)), eventType);

@@ -12,23 +12,16 @@ public class PlayerManagement implements Serializable {
     private final List<Player> players = new ArrayList<>();
     private int currentPlayer = 0;
 
-    public PlayerManagement(int count) throws FileNotFoundException {
+    public PlayerManagement(List<Faction> factions, int count) throws FileNotFoundException {
         if (count <= 0) throw new IllegalStateException("Must have players");
+        
         for (int i = 0; i < count; i++) {
-            this.addPlayer();
+        	players.add(new Player(factions));
         }
     }
 
-    public PlayerManagement() throws FileNotFoundException {
-        this(1);
-    }
-
-    /**
-     * add new player
-     * @throws FileNotFoundException
-     */
-    public void addPlayer() throws FileNotFoundException {
-        players.add(new Player());
+    public PlayerManagement(List<Faction> factions) throws FileNotFoundException {
+        this(factions, 1);
     }
 
     public Player getPlayer() {

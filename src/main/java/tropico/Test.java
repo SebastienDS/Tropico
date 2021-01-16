@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import tropico.events.Event;
-import tropico.events.EventsDeserializer;
+import tropico.utils.UtilsDeserialization;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -19,7 +19,7 @@ public class Test {
     	Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
 
     	Gson gson = new GsonBuilder()
-    			.registerTypeAdapter(eventType, new EventsDeserializer())
+    			.registerTypeAdapter(eventType, new UtilsDeserialization(UtilsDeserialization.loadFactions("src/factions.json")))
     			.create();
 
     	Map<Season, List<Event>> eventsMap = gson.fromJson(new JsonReader(new FileReader("src/test.json")), eventType);
