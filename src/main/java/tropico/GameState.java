@@ -22,6 +22,7 @@ public class GameState implements Serializable {
     private final Map<Season, List<Event>> events;
     private final Difficulty difficulty;
     private final PlayerManagement players;
+    private Event currentEvent;
     private Season season;
     private int turn;
 
@@ -29,6 +30,7 @@ public class GameState implements Serializable {
         this.season = season;
         this.difficulty = difficulty;
         events = loadEvents("src/test.json");
+        currentEvent = newEvent();
         players = new PlayerManagement();
         turn = 1;
     }
@@ -53,11 +55,15 @@ public class GameState implements Serializable {
 		return turn;
 	}
 
-    /**
+    public Event getCurrentEvent() {
+		return currentEvent;
+	}
+
+	/**
      * get a new random event
      * @return random Event
      */
-    public Event getNewEvent() {
+    private Event newEvent() {
         Random rand = new Random();
         List<Event> list = events.get(season);
         return list.get(rand.nextInt(list.size()));
@@ -68,6 +74,7 @@ public class GameState implements Serializable {
      */
     public void nextTurn() {
     	season = Season.nextSeason(season);
+    	currentEvent = newEvent();
     	turn++;
     	
         players.nextTurn();

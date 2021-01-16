@@ -57,7 +57,7 @@ public class Main {
 
 		while (true) {
 			// TODO only doable events
-			event = game.getNewEvent();
+			event = game.getCurrentEvent();
 			eventChoices = event.getChoices();
 			ArrayList<String> choicesStr = getChoices();
 
