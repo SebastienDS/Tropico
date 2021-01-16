@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import tropico.events.*;
+import tropico.DifficultySingleton;
 import tropico.Faction;
 import tropico.Season;
 
@@ -169,6 +170,23 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 		if (type == null)
 			throw new IllegalStateException(effect.get("resource") + " is not a valid resource");
 		int value = effect.get("value").getAsInt();
+		float multiplier = 1;
+		
+		switch (DifficultySingleton.getDifficulty()) {
+		case EASY:
+			multiplier = 0.5f;
+			break;
+		case MEDIUM:
+			multiplier = 1;
+			break;
+		case HARD:
+			multiplier = 1.5f;
+			break;
+
+		}
+		if (value < 0) {
+			value *= multiplier;
+		}
 
 		return new OtherEffect(type, value);
 	}

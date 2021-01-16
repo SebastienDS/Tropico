@@ -36,8 +36,8 @@ public class PlayerManagement implements Serializable {
     }
 
     /**
-     * get if a player is dead
-     * @return true if a player is dead
+     * Searches if a player is dead
+     * @return Returns true if a player lost, false if not
      */
     public boolean havePlayerDead() {
         for (Player player: players) {

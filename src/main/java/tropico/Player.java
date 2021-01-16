@@ -124,7 +124,21 @@ public class Player implements Serializable {
 	 * @return true is player is dead
 	 */
 	public boolean isDead() {
-		int thresholdOfDefeat = 10;
+		int thresholdOfDefeat;
+		switch (DifficultySingleton.getDifficulty()) {
+		case EASY:
+			thresholdOfDefeat = 10;
+			break;
+		case MEDIUM:
+			thresholdOfDefeat = 30;
+			break;
+		case HARD:
+			thresholdOfDefeat = 50;
+			break;
+		default:
+			throw new IllegalStateException("La difficulté n'existe pas.");
+		}
+		
 		int sum = 0;
 		int totalSupporter = 0;
 

@@ -4,6 +4,7 @@ import tropico.DifficultySingleton;
 import tropico.Faction;
 import tropico.GameState;
 import tropico.Player;
+import tropico.DifficultySingleton.Difficulty;
 import tropico.events.Choice;
 import tropico.events.Event;
 import tropico.utils.Backup;
@@ -147,7 +148,7 @@ public class Main {
 	 * @throws FileNotFoundException
 	 */
 	private static GameState newGame() throws FileNotFoundException {
-		DifficultySingleton.getDifficulty();
+		DifficultySingleton.getDifficulty(Difficulty.HARD);
 		return new GameState();
 	}
 
