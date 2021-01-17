@@ -1,0 +1,15 @@
+Changements depuis la soutenance:
+
+- Ajout des pots de vin et marché en fin d'année
+- Ajout du choix de la difficulté
+- Ajout d'un scénario et du choix des scénarios
+- Ajout d'un script python pour créer des évennements (format json)
+- Ajout du multijoueur
+- Ajout d'événnements chainés
+- Ajout de commentaires et javadoc
+- Amélioration de l'affichage à la fin d'une partie
+- Amélioration du système de sauvegarde (une sauvegarde par scénario)
+- Correction de la sauvegarde
+- Correction de la baisse de satisfaction de toutes les factions lorsqu'un partisan meurt
+
+- Autres corrections mineures et optimisation du code
