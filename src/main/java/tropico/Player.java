@@ -165,7 +165,7 @@ public class Player implements Serializable {
 		effect1.applyEffect(this);
 
 		// TODO better way ?
-		FactionSatisfactionEffect effect2 = new FactionSatisfactionEffect("loyalistes", bribeCost / 10);
+		FactionSatisfactionEffect effect2 = new FactionSatisfactionEffect("loyalistes", -bribeCost / 10);
 		System.out.println(effect2);
 		effect2.applyEffect(this);
 

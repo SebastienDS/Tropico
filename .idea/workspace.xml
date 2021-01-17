@@ -6,16 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="58ddce65-b0b7-4735-9a37-2df84dce4b95" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/GameController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/PrimaryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/SceneManagement.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/controllers/SecondaryController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tropico/controllers/Interface_in_game.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tropico/controllers/primary.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tropico/controllers/secondary.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/tropico/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tropico/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,13 +59,26 @@
       <command value="mvn clean install" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="tropico.controllers.App" />
       <module name="Tropico" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="tropico.controllers.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="tropico.main.Main" />
+      <module name="Tropico" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="tropico.main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -97,6 +101,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.App" />
         <item itemvalue="Application.Test" />
       </list>
@@ -131,25 +136,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610543387177" />
-    <state width="1493" height="384" key="GridCell.Tab.0.bottom" timestamp="1610543486243">
+    <state width="1493" height="230" key="GridCell.Tab.0.bottom" timestamp="1610875494600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="384" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610543486243" />
+    <state width="1493" height="230" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610875494600" />
     <state width="1237" height="210" key="GridCell.Tab.0.bottom/0.0.1536.824/1920.46.1280.984@1920.46.1280.984" timestamp="1605288023537" />
-    <state width="1493" height="384" key="GridCell.Tab.0.center" timestamp="1610543486243">
+    <state width="1493" height="230" key="GridCell.Tab.0.center" timestamp="1610875494600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="384" key="GridCell.Tab.0.center/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610543486243" />
+    <state width="1493" height="230" key="GridCell.Tab.0.center/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610875494600" />
     <state width="1237" height="210" key="GridCell.Tab.0.center/0.0.1536.824/1920.46.1280.984@1920.46.1280.984" timestamp="1605288023537" />
-    <state width="1493" height="384" key="GridCell.Tab.0.left" timestamp="1610543486243">
+    <state width="1493" height="230" key="GridCell.Tab.0.left" timestamp="1610875494600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="384" key="GridCell.Tab.0.left/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610543486243" />
+    <state width="1493" height="230" key="GridCell.Tab.0.left/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610875494600" />
     <state width="1237" height="210" key="GridCell.Tab.0.left/0.0.1536.824/1920.46.1280.984@1920.46.1280.984" timestamp="1605288023537" />
-    <state width="1493" height="384" key="GridCell.Tab.0.right" timestamp="1610543486243">
+    <state width="1493" height="230" key="GridCell.Tab.0.right" timestamp="1610875494600">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="384" key="GridCell.Tab.0.right/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610543486243" />
+    <state width="1493" height="230" key="GridCell.Tab.0.right/0.0.1536.824/1920.46.1280.984@0.0.1536.824" timestamp="1610875494600" />
     <state width="1237" height="210" key="GridCell.Tab.0.right/0.0.1536.824/1920.46.1280.984@1920.46.1280.984" timestamp="1605288023537" />
     <state x="249" y="0" key="SettingsEditor" timestamp="1609324349726">
       <screen x="0" y="0" width="1536" height="824" />
