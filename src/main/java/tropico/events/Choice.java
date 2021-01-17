@@ -3,6 +3,8 @@ package tropico.events;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Objects;
 
 import tropico.Player;
 
@@ -11,13 +13,13 @@ public class Choice implements Iterable<Effect>, Serializable {
     private static final long serialVersionUID = 1L;
 
     private final String label;
-    private final ArrayList<Effect> effects;
+    private final List<Effect> effects;
     private final Event next;
 
 
-    public Choice(String label, ArrayList<Effect> effects, Event next) {
+    public Choice(String label, List<Effect> effects, Event next) {
         this.label = label;
-        this.effects = effects;
+        this.effects = Objects.requireNonNull(effects);
         this.next = next;
     }
 

@@ -13,20 +13,14 @@ import tropico.Season;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<Event>>> {
 
 	private List<Faction> factions;
 
 	public UtilsDeserialization(List<Faction> factions) {
-		super();
-		this.factions = factions;
+		this.factions = Objects.requireNonNull(factions);
 	}
 
 	/**

@@ -19,6 +19,7 @@ import java.util.Random;
 public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	private static final String SCENARIO_PATH = "src/main/resources/scenarios";
 
 	private final Map<Season, List<Event>> events;
 	private final PlayerManagement players;
@@ -27,20 +28,20 @@ public class GameState implements Serializable {
 	private Season season;
 	private int turn;
 
-	public GameState(String gamemode) throws FileNotFoundException {
+	public GameState(String gamemode, int playerNumbers) throws FileNotFoundException {
 		this.season = Season.SPRING;
 		this.gamemode = gamemode;
-		String path = "src/main/resources/scenarios/" + gamemode + "/";
+		String path = SCENARIO_PATH + "/" + gamemode + "/";
 
-		players = new PlayerManagement(path);
+		players = new PlayerManagement(path, playerNumbers);
 		List<Faction> factions = getPlayer().getFactions();
 		events = loadEvents(factions, path + "events.json");
 		currentEvent = newEvent();
 		turn = 1;
 	}
-	
+
 	public GameState() throws FileNotFoundException {
-		this("bac_a_sable");
+		this("bac_a_sable", 1);
 	}
 
 	public Player getPlayer() {

@@ -38,6 +38,10 @@ public class Resources implements Serializable {
 		return foodUnit;
 	}
 
+	public Resources copy() {
+		return new Resources(industry, farming, treasury, foodUnit);
+	}
+
 	/**
 	 * Adds industry value
 	 * 

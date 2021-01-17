@@ -5,6 +5,7 @@ import tropico.Season;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 public class Event implements Iterable<Choice>, Serializable {
 
@@ -16,8 +17,8 @@ public class Event implements Iterable<Choice>, Serializable {
 
     public Event(String name, List<Season> seasons, List<Choice> choices) {
         this.name = name;
-        this.seasons = seasons;
-        this.choices = choices;
+        this.seasons = Objects.requireNonNull(seasons);
+        this.choices = Objects.requireNonNull(choices);
     }
 
     public List<Season> getSeasons() {
@@ -36,7 +37,7 @@ public class Event implements Iterable<Choice>, Serializable {
     public String toString() {
     	StringBuilder str = new StringBuilder(name);
     	for (int i = 0; i < choices.size(); i++) {
-			str.append("\n" + (i+1) + ") " + choices.get(i));
+			str.append("\n").append(i + 1).append(") ").append(choices.get(i));
 		}
         return str.toString();
     }

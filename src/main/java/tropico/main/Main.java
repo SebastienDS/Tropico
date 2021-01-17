@@ -22,6 +22,8 @@ import java.util.Scanner;
 
 public class Main {
 
+	private static final int MAX_PLAYERS = 4;
+
 	public static void main(String[] args) throws Exception {
 
 		try (Scanner sc = new Scanner(System.in)) {
@@ -65,9 +67,14 @@ public class Main {
 		Event event;
 
 		List<Choice> eventChoices;
+		Player p;
 
 		while (true) {
+			p = game.getPlayer();
+
 			// TODO only doable events
+			System.out.println("[" + p.getName() + "]");
+
 			event = game.getCurrentEvent();
 			eventChoices = event.getChoices();
 			ArrayList<String> choicesStr = getChoices();
@@ -79,7 +86,7 @@ public class Main {
 			int input = getInt(sc, 1, eventChoices.size()) - 1;
 			Choice choice = eventChoices.get(input);
 			choice.forEach(System.out::println);
-			choice.choose(game.getPlayer());
+			choice.choose(p);
 
 			if (game.isGameOver()) {
 				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn() - 1) + " tours.");
@@ -96,7 +103,7 @@ public class Main {
 	}
 
 	private static ArrayList<String> getChoices() {
-		ArrayList<String> choicesStr = new ArrayList<String>();
+		ArrayList<String> choicesStr = new ArrayList<>();
 
 		StringBuilder gameChoices = new StringBuilder();
 		gameChoices.append("0) Sauvegarder la partie\n");
@@ -161,10 +168,13 @@ public class Main {
 		System.out.println("Dans quelle difficulté souhaitez-vous jouer ?\n1) Facile\n2) Moyen\n3) Difficile");
 		List<Difficulty> lst = List.of(Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD);
 		
-		int input = getInt(sc, 1, 3);
-		
-		DifficultySingleton.getDifficulty(lst.get(input-1));
-		return new GameState(gamemode);
+		int difficulty = getInt(sc, 1, 3);
+
+		System.out.println("A combien de joueur voulez-vous jouer ? ");
+		int playerNumbers = getInt(sc, 1, MAX_PLAYERS);
+
+		DifficultySingleton.getDifficulty(lst.get(difficulty-1));
+		return new GameState(gamemode, playerNumbers);
 	}
 
 	/**

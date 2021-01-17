@@ -6,21 +6,20 @@ import tropico.events.OtherEffect.types;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private final String name;
 	private final Resources resources;
 	private final List<Faction> factions;
 
-	public Player(List<Faction> factions, Resources resources) throws FileNotFoundException {
-		this.factions = factions;
-		this.resources = resources;
+	public Player(String name, List<Faction> factions, Resources resources) {
+		this.name = name;
+		this.factions = Objects.requireNonNull(factions);
+		this.resources = Objects.requireNonNull(resources);
 	}
 
 	public List<Faction> getFactions() {
@@ -35,6 +34,10 @@ public class Player implements Serializable {
 			}
 		}
 		return List.copyOf(fList);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int getIndustry() {
@@ -205,17 +208,17 @@ public class Player implements Serializable {
 	 */
 	public String generateResources() {
 		StringBuilder str = new StringBuilder();
-		str.append("Vous avez générer " + resources.generateFood() + " de nourriture.\n");
-		str.append("Vous avez générer " + resources.generateMoney() + "$.\n");
+		str.append("Vous avez générer ").append(resources.generateFood()).append(" de nourriture.\n");
+		str.append("Vous avez générer ").append(resources.generateMoney()).append("$.\n");
 
 		int pop = getSupporterTotal();
 		int overflow = resources.consumeFood(pop);
 
 		if (overflow > 0) {
 			killSupporters(overflow, pop);
-			str.append("Par manque de nourriture, " + overflow + " partisans sont morts.");
+			str.append("Par manque de nourriture, ").append(overflow).append(" partisans sont morts.");
 		} else if (resources.hasEnoughFarming(pop)) {
-			str.append("La nourriture coule à flots ! Il y a " + generateNewSupporters(pop) + " nouveaux partisans.");
+			str.append("La nourriture coule à flots ! Il y a ").append(generateNewSupporters(pop)).append(" nouveaux partisans.");
 		}
 
 		return str.toString();

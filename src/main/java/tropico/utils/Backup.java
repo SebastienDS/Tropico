@@ -3,6 +3,7 @@ package tropico.utils;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Objects;
 
 public class Backup {
 
@@ -13,6 +14,7 @@ public class Backup {
      * @throws IOException
      */
     public static void saveObject(String src, Object obj) throws IOException {
+        Objects.requireNonNull(obj);
         Path path = Path.of(src);
 
         try (OutputStream back = Files.newOutputStream(path);

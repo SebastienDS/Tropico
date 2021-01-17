@@ -22,7 +22,7 @@ public class PlayerManagement implements Serializable {
 		Resources resources = UtilsDeserialization.loadResources(path + "resources.json");
 
 		for (int i = 0; i < count; i++) {
-			players.add(new Player(factions, resources));
+			players.add(new Player("Player " + (i + 1), List.copyOf(factions), resources.copy()));
 		}
 	}
 
