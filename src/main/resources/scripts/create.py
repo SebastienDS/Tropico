@@ -55,8 +55,7 @@ def create_event():
     if seasons:
         event["seasons"] = seasons
 
-    if input("Ajouter des choix ? [O/n] ") in {"o", "O", ""}:
-        event["choices"] = create(create_choice, "choix")
+    event["choices"] = create(create_choice, "choix")
 
     return event
 

@@ -86,7 +86,9 @@ public class Main {
 			int input = getInt(sc, 1, eventChoices.size()) - 1;
 			Choice choice = eventChoices.get(input);
 			choice.forEach(System.out::println);
-			choice.choose(p);
+
+			Event next = choice.choose(p);
+			if (next != null) game.addPendingEvent(next);
 
 			if (game.isGameOver()) {
 				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn() - 1) + " tours.");

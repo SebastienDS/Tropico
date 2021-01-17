@@ -109,7 +109,6 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 
 		// Verifying that next event exists
 		if (obj.has("next") && !obj.get("next").isJsonNull()) {
-			System.out.println(obj.get("next") + ":" + obj.has("next"));
 			next = deserializeEvent(obj.get("next").getAsJsonObject(), context);
 		}
 

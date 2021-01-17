@@ -12,9 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class GameState implements Serializable {
 
@@ -24,6 +22,7 @@ public class GameState implements Serializable {
 	private final Map<Season, List<Event>> events;
 	private final PlayerManagement players;
 	private final String gamemode;
+	private final List<Event> pendingEvents = new ArrayList<>();
 	private Event currentEvent;
 	private Season season;
 	private int turn;
@@ -44,6 +43,10 @@ public class GameState implements Serializable {
 		this("bac_a_sable", 1);
 	}
 
+	public List<Event> getPendingEvents() {
+		return pendingEvents;
+	}
+
 	public Player getPlayer() {
 		return players.getPlayer();
 	}
@@ -61,14 +64,35 @@ public class GameState implements Serializable {
 	}
 
 	/**
+	 * add a Pending Event
+	 * @param e
+	 */
+	public void addPendingEvent(Event e) {
+		pendingEvents.add(Objects.requireNonNull(e));
+	}
+
+	/**
 	 * get a new random event
 	 * 
 	 * @return random Event
 	 */
 	private Event newEvent() {
 		Random rand = new Random();
+
+		if (havePendingEvent() && rand.nextInt(2) == 1) {
+			return pendingEvents.remove(rand.nextInt(pendingEvents.size()));
+		}
+
 		List<Event> list = events.get(season);
 		return list.get(rand.nextInt(list.size()));
+	}
+
+	/**
+	 * check if have Pending Event
+	 * @return true if have Pending Event
+	 */
+	private boolean havePendingEvent() {
+		return pendingEvents.size() > 0;
 	}
 
 	/**

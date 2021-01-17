@@ -105,8 +105,7 @@
             "resource": "INDUSTRY",
             "value": 10
           }
-        ],
-        "next": null
+        ]
       },
       {
         "label": "Exploitons-le au maximum pour moderniser le pays !",
@@ -132,8 +131,7 @@
             "resource": "INDUSTRY",
             "value": 20
           }
-        ],
-        "next": null
+        ]
       },
       {
         "label": "Vendons les terrains à l’Empire du Dragon et renflouons nos comptes secrets.",
@@ -153,8 +151,7 @@
             "resource": "TREASURY",
             "value": 100
           }
-        ],
-        "next": null
+        ]
       }
     ]
   },
@@ -227,8 +224,7 @@
             "resource": "FARMING",
             "value": -10
           }
-        ],
-        "next": null
+        ]
       }
     ]
   }
