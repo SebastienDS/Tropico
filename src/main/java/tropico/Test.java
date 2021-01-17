@@ -16,18 +16,15 @@ import java.util.Map;
 public class Test {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
-    	Type eventType = new TypeToken<Map<Season, List<Event>>>(){}.getType();
+    	Type eventType = new TypeToken<List<Event>>(){}.getType();
 
     	Gson gson = new GsonBuilder()
     			.registerTypeAdapter(eventType, new UtilsDeserialization(UtilsDeserialization.loadFactions("src/main/resources/factions.json")))
     			.create();
 
-    	Map<Season, List<Event>> eventsMap = gson.fromJson(new JsonReader(new FileReader("src/main/resources/scenario/test.json")), eventType);
+    	List<Event> events = gson.fromJson(new JsonReader(new FileReader("src/main/resources/scenario/test.json")), eventType);
 
-    	eventsMap.forEach((k, v) -> System.out.printf("%s : %s | ", k, v));
-
-    	System.out.println();
-    	System.out.println(eventsMap.get(Season.AUTUMN));
+		System.out.println(events);
 
     }
 }

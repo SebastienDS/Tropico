@@ -15,7 +15,7 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<Event>>> {
+public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 
 	private List<Faction> factions;
 
@@ -33,18 +33,13 @@ public class UtilsDeserialization implements JsonDeserializer<Map<Season, List<E
 	 * @throws JsonParseException
 	 */
 	@Override
-	public Map<Season, List<Event>> deserialize(JsonElement jsonElement, Type type,
+	public List<Event> deserialize(JsonElement jsonElement, Type type,
 			JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
-		Map<Season, List<Event>> events = new HashMap<>();
+		List<Event> events = new ArrayList<>();
 
 		JsonArray jsonArray = jsonElement.getAsJsonArray();
 		for (JsonElement element : jsonArray) {
-			Event event = deserializeEvent(element.getAsJsonObject(), jsonDeserializationContext);
-
-			event.getSeasons().forEach(season -> {
-				events.computeIfAbsent(season, k -> new ArrayList<>());
-				events.get(season).add(event);
-			});
+			events.add(deserializeEvent(element.getAsJsonObject(), jsonDeserializationContext));
 		}
 		return events;
 	}

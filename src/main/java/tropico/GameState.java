@@ -13,13 +13,15 @@ import java.io.FileReader;
 import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class GameState implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static final String SCENARIO_PATH = "src/main/resources/scenarios";
 
-	private final Map<Season, List<Event>> events;
+	private final List<Event> events;
+	private final List<Event> usedEvents = new ArrayList<>();
 	private final PlayerManagement players;
 	private final String gamemode;
 	private final List<Event> pendingEvents = new ArrayList<>();
@@ -43,10 +45,6 @@ public class GameState implements Serializable {
 		this("bac_a_sable", 1);
 	}
 
-	public List<Event> getPendingEvents() {
-		return pendingEvents;
-	}
-
 	public Player getPlayer() {
 		return players.getPlayer();
 	}
@@ -61,6 +59,10 @@ public class GameState implements Serializable {
 
 	public String getGamemode() {
 		return gamemode;
+	}
+
+	public int getCurrentPlayer() {
+		return players.getCurrentPlayer();
 	}
 
 	/**
@@ -83,8 +85,24 @@ public class GameState implements Serializable {
 			return pendingEvents.remove(rand.nextInt(pendingEvents.size()));
 		}
 
-		List<Event> list = events.get(season);
-		return list.get(rand.nextInt(list.size()));
+		List<Event> list = this.getEvents(season);
+		if (list.isEmpty()) {
+			this.repopulateEventsWithUsed(season);
+			list = this.getEvents(season);
+		}
+		Event event = list.get(rand.nextInt(list.size()));
+		events.remove(event);
+		usedEvents.add(event);
+		return event;
+	}
+
+	/**
+	 * repopulate events not used with used events for a specific season
+	 * @param season
+	 */
+	private void repopulateEventsWithUsed(Season season) {
+		List<Event> eventsForThisSeason = usedEvents.stream().filter(e -> e.getSeasons().contains(season)).collect(Collectors.toList());
+		events.addAll(eventsForThisSeason);
 	}
 
 	/**
@@ -96,14 +114,28 @@ public class GameState implements Serializable {
 	}
 
 	/**
+	 * get Events of a season
+	 * @param season
+	 * @return List of Event for the giving season
+	 */
+	private List<Event> getEvents(Season season) {
+		return events.stream().filter(e -> e.getSeasons().contains(season)).collect(Collectors.toList());
+	}
+	/**
 	 * next turn
 	 */
 	public void nextTurn() {
-		season = Season.nextSeason(season);
 		currentEvent = newEvent();
 		turn++;
 
 		players.nextTurn();
+	}
+
+	/**
+	 * next season
+	 */
+	public void nextSeason() {
+		season = Season.nextSeason(season);
 	}
 
 	public boolean isEndOfYear() {
@@ -126,9 +158,9 @@ public class GameState implements Serializable {
 	 * @return Map with events for each season
 	 * @throws FileNotFoundException
 	 */
-	private static Map<Season, List<Event>> loadEvents(List<Faction> factions, String eventsPath)
+	private static List<Event> loadEvents(List<Faction> factions, String eventsPath)
 			throws FileNotFoundException {
-		Type eventType = new TypeToken<Map<Season, List<Event>>>() {
+		Type eventType = new TypeToken<List<Event>>() {
 		}.getType();
 
 		Gson gson = new GsonBuilder().registerTypeAdapter(eventType, new UtilsDeserialization(factions)).create();

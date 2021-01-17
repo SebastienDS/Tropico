@@ -34,6 +34,10 @@ public class PlayerManagement implements Serializable {
 		return players.get(currentPlayer);
 	}
 
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
 	/**
 	 * set the next player
 	 */

@@ -100,6 +100,7 @@ public class Main {
 			}
 
 			game.nextTurn();
+			if (game.getCurrentPlayer() == 0) game.nextSeason();
 
 		}
 	}
