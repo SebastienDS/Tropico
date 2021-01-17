@@ -2,4 +2,4 @@ target
 .settings
 .project
 .classpath
-/src/main/resources/backup/*
+src/main/resources/backup/*
