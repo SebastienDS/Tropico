@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * turn</li>
  * <li>The current turn</li>
  * </ul>
- * 
+ *
  * @author Corentin OGER & Sébastien DOS SANTOS
  *
  */
@@ -90,11 +90,11 @@ public class GameState implements Serializable {
 
 	/**
 	 * <b>GameState's constructor</b>
-	 * 
+	 *
 	 * Creates all the game's informations, based on json files found using
 	 * SCENARIO_PATH concatenated with the gamemode. Also needs the number of
 	 * players.
-	 * 
+	 *
 	 * @param gamemode      A String that must contains the gamemode entered by the
 	 *                      user.
 	 * @param playerNumbers An int representing the number of players.
@@ -118,9 +118,9 @@ public class GameState implements Serializable {
 
 	/**
 	 * <b>GameState's second constructor</b>
-	 * 
+	 *
 	 * Calls the first constructor with one player and the default mode (sandbox).
-	 * 
+	 *
 	 * @throws FileNotFoundException Throws a FileNotFoundException if the path is
 	 *                               wrong.
 	 */
@@ -130,7 +130,7 @@ public class GameState implements Serializable {
 
 	/**
 	 * This method returns a player, the one who's playing this turn.
-	 * 
+	 *
 	 * @return Returns a Player object.
 	 */
 	public Player getPlayer() {
@@ -139,7 +139,7 @@ public class GameState implements Serializable {
 
 	/**
 	 * Getter for the turn field.
-	 * 
+	 *
 	 * @return Returns an int which represents the current turn.
 	 */
 	public int getTurn() {
@@ -148,7 +148,7 @@ public class GameState implements Serializable {
 
 	/**
 	 * Getter for the currentEvent field.
-	 * 
+	 *
 	 * @return Returns the Event occuring this turn.
 	 */
 	public Event getCurrentEvent() {
@@ -157,7 +157,7 @@ public class GameState implements Serializable {
 
 	/**
 	 * Getter for the gamemode field.
-	 * 
+	 *
 	 * @return Returns a String which represents the gamemode.
 	 */
 	public String getGamemode() {
@@ -167,7 +167,7 @@ public class GameState implements Serializable {
 	/**
 	 * This method returns an int which represents the index of the player in the
 	 * players list. It serves as a name to identify him.
-	 * 
+	 *
 	 * @return Returns an int that represents the current player's index.
 	 */
 	public int getCurrentPlayer() {
@@ -176,7 +176,7 @@ public class GameState implements Serializable {
 
 	/**
 	 * Adds an event to pendingEvents.
-	 * 
+	 *
 	 * @param e The event to be added.
 	 */
 	public void addPendingEvent(Event e) {
@@ -195,14 +195,19 @@ public class GameState implements Serializable {
 
 	/**
 	 * Selects a new event to be the currentEvent.
-	 * 
+	 *
 	 * @return Returns a random Event from events list.
 	 */
 	private Event newEvent() {
 		Random rand = new Random();
 
-		// Chooses to take a pending event or not
-		if (havePendingEvent() && rand.nextInt(2) == 1) {
+		if (rand.nextInt(2) == 1) {
+			Optional<Event> e = this.getPendingEvent();
+			if (e.isPresent()) {
+				Event event = e.get();
+				pendingEvents.remove(event);
+				return event;
+			}
 			return pendingEvents.remove(rand.nextInt(pendingEvents.size()));
 		}
 
@@ -220,28 +225,28 @@ public class GameState implements Serializable {
 
 	/**
 	 * Repopulates events not used with used events for a specific season.
-	 * 
+	 *
 	 * @param season The season you need to repopulate events.
 	 */
 	private void repopulateEventsWithUsed(Season season) {
 		List<Event> eventsForThisSeason = usedEvents.stream().filter(e -> e.getSeasons().contains(season))
 				.collect(Collectors.toList());
 		events.addAll(eventsForThisSeason);
+		usedEvents.removeAll(eventsForThisSeason);
 	}
 
 	/**
-	 * Checks if pending events exists.
-	 * 
-	 * @return Returns true if there is at least one pending event, false otherwise.
+	 * Returns an Optional Event if a pending event exists for the current season.
+	 * @return Returns an Optional Event
 	 */
-	private boolean havePendingEvent() {
-		return pendingEvents.size() > 0;
+	private Optional<Event> getPendingEvent() {
+		return pendingEvents.stream().filter(e -> e.getSeasons().contains(season)).findAny();
 	}
 
 	/**
 	 * This method takes a season and return all the events than can occur during
 	 * it.
-	 * 
+	 *
 	 * @param season The season for which you need the events.
 	 * @return Returns a list of events that can occur during the season.
 	 */
@@ -260,7 +265,7 @@ public class GameState implements Serializable {
 	/**
 	 * Checks if this is the end of the year, which is true chen the current season
 	 * is winter.
-	 * 
+	 *
 	 * @return Returns true if season field equals Season.WINTER, false otherwise.
 	 */
 	public boolean isEndOfYear() {
@@ -271,7 +276,7 @@ public class GameState implements Serializable {
 	 * Checks if the game is over. The game is over when there is only one player
 	 * left if there where more than one initialy, or when the player loses
 	 * otherwise.
-	 * 
+	 *
 	 * @return Returns true when the player is dead or all other players are dead
 	 *         (multiplayer), false otherwise.
 	 */
@@ -282,7 +287,7 @@ public class GameState implements Serializable {
 	/**
 	 * Loads Events from json file. Requires the list of all the factions and the
 	 * path to find the file.
-	 * 
+	 *
 	 * @param factions   The list containing all the factions of this scenario.
 	 * @param eventsPath The path where the json file is located.
 	 * @return Returns the list of all the events of this scenario.

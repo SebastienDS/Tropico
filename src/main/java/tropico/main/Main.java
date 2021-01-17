@@ -346,7 +346,7 @@ public class Main {
 		int len = factions.size();
 
 		for (int i = 0; i < len; i++) {
-			choices.append("\n" + (i + 1) + ") " + factions.get(i) + " coût : " + factions.get(i).getBribeCost() + "$");
+			choices.append("\n").append(i + 1).append(") ").append(factions.get(i)).append(" coût : ").append(factions.get(i).getBribeCost()).append("$");
 		}
 
 		System.out.println(choices);
