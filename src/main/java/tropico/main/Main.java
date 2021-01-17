@@ -22,7 +22,7 @@ import java.util.Scanner;
 
 public class Main {
 
-	private static final int MAX_PLAYERS = 4;
+	private static final int MAX_PLAYERS = 2;
 
 	public static void main(String[] args) throws Exception {
 

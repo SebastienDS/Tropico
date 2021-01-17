@@ -7,20 +7,59 @@ import tropico.events.OtherEffect.types;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * This class contains informations about a player, including:
+ * <ul>
+ * <li></li>
+ * <li>The name of the player</li>
+ * <li>The resources of the player</li>
+ * <li>A list of the factions</li>
+ * </ul>
+ * 
+ * @author Corentin OGER & Sébastien DOS SANTOS
+ *
+ */
 public class Player implements Serializable {
 
+	/**
+	 * Necessary field to avoid warning while implementing Serializable.
+	 */
 	private static final long serialVersionUID = 1L;
 
+	/**
+	 * The name of the player.
+	 */
 	private final String name;
+	
+	/**
+	 * The player's resources.
+	 */
 	private final Resources resources;
+	
+	/**
+	 * The player's factions, with their satisfaction and supporters.
+	 */
 	private final List<Faction> factions;
-
+	
+	/**
+	 * <b>Player's constructor</b>
+	 * 
+	 * Creates a player using a name, the list of the different factions of this scenario and the base resources for this scenario.
+	 * 
+	 * @param name A String which represents the name of the player.
+	 * @param factions A list of the factions.
+	 * @param resources The base resources.
+	 */
 	public Player(String name, List<Faction> factions, Resources resources) {
-		this.name = name;
+		this.name = Objects.requireNonNull(name);
 		this.factions = Objects.requireNonNull(factions);
 		this.resources = Objects.requireNonNull(resources);
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public List<Faction> getFactions() {
 		return List.copyOf(factions);
 	}
