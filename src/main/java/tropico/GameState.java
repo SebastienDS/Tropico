@@ -44,7 +44,7 @@ public class GameState implements Serializable {
 	public GameState() throws FileNotFoundException {
 		this("bac_a_sable", 1);
 	}
-
+	
 	public Player getPlayer() {
 		return players.getPlayer();
 	}
@@ -81,7 +81,13 @@ public class GameState implements Serializable {
 	private Event newEvent() {
 		Random rand = new Random();
 
-		if (havePendingEvent() && rand.nextInt(2) == 1) {
+		if (rand.nextInt(2) == 1) {
+			Optional<Event> e = this.getPendingEvent();
+			if (e.isPresent()) {
+				Event event = e.get();
+				pendingEvents.remove(event);
+				return event;
+			}
 			return pendingEvents.remove(rand.nextInt(pendingEvents.size()));
 		}
 
@@ -103,14 +109,15 @@ public class GameState implements Serializable {
 	private void repopulateEventsWithUsed(Season season) {
 		List<Event> eventsForThisSeason = usedEvents.stream().filter(e -> e.getSeasons().contains(season)).collect(Collectors.toList());
 		events.addAll(eventsForThisSeason);
+		usedEvents.removeAll(eventsForThisSeason);
 	}
 
 	/**
-	 * check if have Pending Event
-	 * @return true if have Pending Event
+	 * get an event form pending event
+	 * @return Optional Event
 	 */
-	private boolean havePendingEvent() {
-		return pendingEvents.size() > 0;
+	private Optional<Event> getPendingEvent() {
+		return pendingEvents.stream().filter(e -> e.getSeasons().contains(season)).findAny();
 	}
 
 	/**
