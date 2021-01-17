@@ -3,6 +3,7 @@ package tropico;
 import tropico.utils.Utils;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Faction implements Serializable {
 
@@ -94,5 +95,22 @@ public class Faction implements Serializable {
 			throw new IllegalStateException("La faction est n'a déjà plus aucun partisans.");
 		}
 		supporter--;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(name);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!(obj instanceof Faction)) {
+			return false;
+		}
+		Faction other = (Faction) obj;
+		return Objects.equals(name, other.name);
 	}
 }

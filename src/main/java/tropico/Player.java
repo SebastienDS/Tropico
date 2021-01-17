@@ -4,7 +4,6 @@ import tropico.events.FactionSatisfactionEffect;
 import tropico.events.OtherEffect;
 import tropico.events.OtherEffect.types;
 
-import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.*;
 
@@ -167,7 +166,6 @@ public class Player implements Serializable {
 		System.out.println(effect1);
 		effect1.applyEffect(this);
 
-		// TODO better way ?
 		FactionSatisfactionEffect effect2 = new FactionSatisfactionEffect("loyalistes", -bribeCost / 10);
 		System.out.println(effect2);
 		effect2.applyEffect(this);
@@ -218,7 +216,8 @@ public class Player implements Serializable {
 			killSupporters(overflow, pop);
 			str.append("Par manque de nourriture, ").append(overflow).append(" partisans sont morts.");
 		} else if (resources.hasEnoughFarming(pop)) {
-			str.append("La nourriture coule à flots ! Il y a ").append(generateNewSupporters(pop)).append(" nouveaux partisans.");
+			str.append("La nourriture coule à flots ! Il y a ").append(generateNewSupporters(pop))
+					.append(" nouveaux partisans.");
 		}
 
 		return str.toString();
@@ -245,17 +244,19 @@ public class Player implements Serializable {
 
 	private int generateNewSupporters(int pop) {
 		Random rd = new Random();
-		int addedPop = (int) (pop * (rd.nextFloat() * 9 + 1));
-		float count, rdfloat;
+		int addedPop = (int) (pop * (rd.nextFloat() * 9 + 1) / 100);
+		double rdfloat;
+		double count;
 
 		for (int i = 0; i < addedPop; i++) {
-			rdfloat = rd.nextFloat();
+			rdfloat = rd.nextDouble();
 			count = 0;
 
-			HashMap<Faction, Float> factionChances = calculateFactionsChances(pop);
+			HashMap<Faction, Double> factionChances = calculateFactionsChances(pop);
 
 			for (Faction faction : factions) {
 				count += factionChances.get(faction);
+
 				if (rdfloat <= count) {
 					faction.addSupporter(1);
 					break;
@@ -266,17 +267,17 @@ public class Player implements Serializable {
 		return addedPop;
 	}
 
-	private HashMap<Faction, Float> calculateFactionsChances(int pop) {
-		HashMap<Faction, Float> chances = new HashMap<Faction, Float>();
+	private HashMap<Faction, Double> calculateFactionsChances(int pop) {
+		HashMap<Faction, Double> chances = new HashMap<Faction, Double>();
 		float factor;
 
 		for (Faction faction : factions) {
-			factor = (float) Math.max(faction.getSatisfaction() / 100 * 0.9 + 0.1, 0.2);
-			chances.put(faction, faction.getSupporter() / pop * factor);
+			factor = (float) Math.max(faction.getSatisfaction() * 0.9 / 100  + 0.1, 0.2);
+			chances.put(faction, faction.getSupporter() * 1.0 / pop * factor);
 		}
 
-		float total = 0;
-		for (float f : chances.values()) {
+		double total = 0.0;
+		for (double f : chances.values()) {
 			total += f;
 		}
 
