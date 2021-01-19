@@ -20,10 +20,27 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Main class of the project, containing the main loop, the scanner and
+ * everything you need to launch the game.
+ * 
+ * @author Corentin OGER and Sébastien DOS SANTOS
+ *
+ */
 public class Main {
 
-	private static final int MAX_PLAYERS = 4;
+	/**
+	 * The maximum number of players for a game.
+	 */
+	private static final int MAX_PLAYERS = 2;
 
+	/**
+	 * The main, launching when the application is launched. Calls the mainloop
+	 * after creating the gamestate.
+	 * 
+	 * @param args No arguments needed.
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 
 		try (Scanner sc = new Scanner(System.in)) {
@@ -33,13 +50,13 @@ public class Main {
 	}
 
 	/**
-	 * Menu of the game
+	 * Menu of the game. Allows to choice whether you want to start a new game or
+	 * continue on your save.
 	 * 
-	 * @param sc the scanner used to interact with the user
-	 * @return GameState a new GameState
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
-	 * @throws Exception
+	 * @param sc The scanner used to interact with the user
+	 * @return GameState Returns a new GameState, or recovers the one from the save.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
 	public static GameState menu(Scanner sc) throws IOException, ClassNotFoundException {
 		System.out.println("1) Nouvelle partie \n2) Charger partie");
@@ -47,20 +64,21 @@ public class Main {
 		int input = getInt(sc, -1, 2);
 		if (input == 1) {
 			return newGame(sc);
-		} 
+		}
 		if (input == 2) {
 			return loadGame(sc);
 		}
-		
+
 		System.exit(0);
 		return null;
 	}
 
 	/**
-	 * main loop for the game
+	 * Main loop for the game, this is how the game works, calling every method
+	 * needed to make the game work.
 	 * 
-	 * @param sc   the scanner used to interact with the user
-	 * @param game the GameState contains all the informations on the game
+	 * @param sc   The scanner used to interact with the user.
+	 * @param game The GameState that contains all the informations on the game.
 	 */
 	public static void mainLoop(Scanner sc, GameState game) throws IOException {
 
@@ -69,42 +87,56 @@ public class Main {
 		List<Choice> eventChoices;
 		Player p;
 
+		// Every loop is a turn
 		while (true) {
 			p = game.getPlayer();
 
-			// TODO only doable events
 			System.out.println("[" + p.getName() + "]");
 
+			// Gets the event and his choices, and the option the user sees
 			event = game.getCurrentEvent();
 			eventChoices = event.getChoices();
 			ArrayList<String> choicesStr = getChoices();
 
+			// Where the player chooses an action
 			if (actionChoice(sc, game, event, choicesStr.get(0))) {
 				return;
 			}
 
+			// Now chooses something to do for the event
 			int input = getInt(sc, 1, eventChoices.size()) - 1;
 			Choice choice = eventChoices.get(input);
 			choice.forEach(System.out::println);
 
+			// Does the choice and checks if the is a following event to this choice
 			Event next = choice.choose(p);
-			if (next != null) game.addPendingEvent(next);
+			if (next != null)
+				game.addPendingEvent(next);
 
+			// Checks if the game is over
 			if (game.isGameOver()) {
 				System.out.println("\nDéfaite ... Vous avez tenu " + (game.getTurn() - 1) + " tours.");
 				return;
 			}
 
+			// Checks if 4 seasons have past
 			if (game.isEndOfYear() && endOfYear(sc, game, choicesStr.get(1))) {
 				return;
 			}
 
+			// goes to next turn
 			game.nextTurn();
-			if (game.getCurrentPlayer() == 0) game.nextSeason();
+			if (game.getCurrentPlayer() == 0)
+				game.nextSeason();
 
 		}
 	}
 
+	/**
+	 * This method builds two strings so the player can choose an option.
+	 * 
+	 * @return Returns an ArrayList containing two strings.
+	 */
 	private static ArrayList<String> getChoices() {
 		ArrayList<String> choicesStr = new ArrayList<>();
 
@@ -131,12 +163,12 @@ public class Main {
 	}
 
 	/**
-	 * get an integer between min and max
+	 * Asks the player for an integer between min and max.
 	 * 
-	 * @param sc
-	 * @param min
-	 * @param max
-	 * @return int in the interval
+	 * @param sc  The scanner used to interact with the user.
+	 * @param min The minimum value for the integer.
+	 * @param max The maximum value for the integer.
+	 * @return Returns an int between min an max.
 	 */
 	private static int getInt(Scanner sc, int min, int max) {
 		int input;
@@ -147,10 +179,10 @@ public class Main {
 	}
 
 	/**
-	 * get an integer
+	 * Asks the player for an integer. Used in the other getInt method.
 	 * 
-	 * @param sc
-	 * @return int
+	 * @param sc The scanner used to interact with the user.
+	 * @return int An int chosen by the user.
 	 */
 	private static int getInt(Scanner sc) {
 		while (!sc.hasNextInt()) {
@@ -161,33 +193,41 @@ public class Main {
 	}
 
 	/**
-	 * create a new Game
+	 * Creates a new game and constructs a new GameState. The player can select the
+	 * difficulty, the gamemode and the number of players.
 	 * 
-	 * @return new game
-	 * @throws IOException 
+	 * @param sc The scanner used to interact with the user.
+	 * @return Returns a new GameState.
+	 * @throws IOException
 	 */
 	private static GameState newGame(Scanner sc) throws IOException {
 		String gamemode = gamemodeChoice(sc);
 		System.out.println("Dans quelle difficulté souhaitez-vous jouer ?\n1) Facile\n2) Moyen\n3) Difficile");
 		List<Difficulty> lst = List.of(Difficulty.EASY, Difficulty.MEDIUM, Difficulty.HARD);
-		
+
 		int difficulty = getInt(sc, 1, 3);
 
 		System.out.println("A combien de joueur voulez-vous jouer ? ");
 		int playerNumbers = getInt(sc, 1, MAX_PLAYERS);
 
-		DifficultySingleton.getDifficulty(lst.get(difficulty-1));
+		DifficultySingleton.getDifficulty(lst.get(difficulty - 1));
 		return new GameState(gamemode, playerNumbers);
 	}
 
 	/**
-	 * load a Game from a save
+	 * Loads a game from a save file and returns the gamestate of the save. Throws
+	 * an exception if the file couldn't be read or it was corrupted.
 	 * 
-	 * @return game loaded
+	 * @param sc The scanner used to interact with the user.
+	 * @return Returns a GameState from the save file.
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
 	private static GameState loadGame(Scanner sc) throws IOException, ClassNotFoundException {
 		String gamemode = gamemodeChoice(sc);
 		String path = "src/main/resources/backup/" + gamemode + "_save";
+
+		// If there is no save file
 		if (!(new File(path)).isFile()) {
 			System.out.println("Aucune sauvegarde trouvée pour ce mode de jeu.");
 			System.out.println("Retour au menu principal.");
@@ -195,31 +235,39 @@ public class Main {
 		}
 		return (GameState) Backup.loadObject(path);
 	}
-	
+
+	/**
+	 * This method allows the user to choose the gamemode he wants. The name of the
+	 * scenarios and the name of the scenario's directory is written in a txt file.
+	 * 
+	 * @param sc The scanner used to interact with the user.
+	 * @return
+	 * @throws IOException
+	 */
 	private static String gamemodeChoice(Scanner sc) throws IOException {
 		System.out.println("Choisissez un mode de jeu.");
 		ArrayList<String> modes = new ArrayList<String>();
 
 		// Opening the file containing the names of the different scenarios
-        InputStream file = Files.newInputStream(Path.of("src/main/resources/scenarios/scenarios.txt"));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(file));
-        
-        String line;
-        String[] splitedLine;
-        int count = 0;
-        
-        while((line = reader.readLine()) != null){
-        	count++;
-        	splitedLine = line.split(":");
-            System.out.println(count + ") " + splitedLine[0]);
-            modes.add(splitedLine[1]);
-        }
-        
-        file.close();
-		
+		InputStream file = Files.newInputStream(Path.of("src/main/resources/scenarios/scenarios.txt"));
+		BufferedReader reader = new BufferedReader(new InputStreamReader(file));
+
+		String line;
+		String[] splitedLine;
+		int count = 0;
+
+		while ((line = reader.readLine()) != null) {
+			count++;
+			splitedLine = line.split(":");
+			System.out.println(count + ") " + splitedLine[0]);
+			modes.add(splitedLine[1]);
+		}
+
+		file.close();
+
 		int input = getInt(sc, 1, count);
-		
-		return modes.get(input-1);
+
+		return modes.get(input - 1);
 	}
 
 	/**
@@ -346,7 +394,8 @@ public class Main {
 		int len = factions.size();
 
 		for (int i = 0; i < len; i++) {
-			choices.append("\n").append(i + 1).append(") ").append(factions.get(i)).append(" coût : ").append(factions.get(i).getBribeCost()).append("$");
+			choices.append("\n").append(i + 1).append(") ").append(factions.get(i)).append(" coût : ")
+					.append(factions.get(i).getBribeCost()).append("$");
 		}
 
 		System.out.println(choices);

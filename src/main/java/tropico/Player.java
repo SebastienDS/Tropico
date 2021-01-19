@@ -15,7 +15,7 @@ import java.util.*;
  * <li>A list of the factions</li>
  * </ul>
  * 
- * @author Corentin OGER & Sébastien DOS SANTOS
+ * @author Corentin OGER and Sébastien DOS SANTOS
  *
  */
 public class Player implements Serializable {

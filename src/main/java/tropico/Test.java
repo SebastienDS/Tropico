@@ -11,20 +11,28 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Test class for the project.
+ * 
+ * @author Corentin OGER and Sébastien DOS SANTOS
+ *
+ */
 public class Test {
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-    	Type eventType = new TypeToken<List<Event>>(){}.getType();
+	public static void main(String[] args) throws IOException, ClassNotFoundException {
+		Type eventType = new TypeToken<List<Event>>() {
+		}.getType();
 
-    	Gson gson = new GsonBuilder()
-    			.registerTypeAdapter(eventType, new UtilsDeserialization(UtilsDeserialization.loadFactions("src/main/resources/factions.json")))
-    			.create();
+		Gson gson = new GsonBuilder()
+				.registerTypeAdapter(eventType,
+						new UtilsDeserialization(UtilsDeserialization.loadFactions("src/main/resources/factions.json")))
+				.create();
 
-    	List<Event> events = gson.fromJson(new JsonReader(new FileReader("src/main/resources/scenario/test.json")), eventType);
+		List<Event> events = gson.fromJson(new JsonReader(new FileReader("src/main/resources/scenario/test.json")),
+				eventType);
 
 		System.out.println(events);
 
-    }
+	}
 }

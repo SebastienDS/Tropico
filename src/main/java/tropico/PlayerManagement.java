@@ -14,7 +14,7 @@ import tropico.utils.UtilsDeserialization;
  * <li>The current player</li>
  * </ul>
  * 
- * @author Corentin OGER & Sébastien DOS SANTOS
+ * @author Corentin OGER and Sébastien DOS SANTOS
  *
  */
 public class PlayerManagement implements Serializable {
