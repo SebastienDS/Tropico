@@ -26,8 +26,8 @@ public class OtherEffect extends AbstractEffect {
 	 *
 	 * Creates an Effect object, requiring the types of resources and the value.
 	 *
-	 * @param type			The type of resource to apply the effect
-	 * @param value         The value of the effect
+	 * @param type  The type of resource to apply the effect
+	 * @param value The value of the effect
 	 */
 	public OtherEffect(types type, int value) {
 		super(value);

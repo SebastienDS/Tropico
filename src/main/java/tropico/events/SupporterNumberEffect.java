@@ -15,18 +15,19 @@ public class SupporterNumberEffect extends AbstractEffect {
 	private final String factionName;
 
 	/**
-	 *  Allows you to add effects in percentages or not
+	 * Allows you to add effects in percentages or not
 	 */
 	private final boolean percentage;
 
 	/**
 	 * <b>SupporterNumberEffect's constructor</b>
 	 *
-	 * Creates an Effect object, requiring the faction, the value and the percentage boolean.
+	 * Creates an Effect object, requiring the faction, the value and the percentage
+	 * boolean.
 	 *
-	 * @param faction		The name of the faction
-	 * @param value         The value of the effect
-	 * @param percentage	Indicates whether the value is a percentage or not
+	 * @param faction    The name of the faction
+	 * @param value      The value of the effect
+	 * @param percentage Indicates whether the value is a percentage or not
 	 */
 	public SupporterNumberEffect(String faction, int value, boolean percentage) {
 		super(value);

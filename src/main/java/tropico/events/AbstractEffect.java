@@ -17,7 +17,7 @@ abstract class AbstractEffect implements Effect {
 	 *
 	 * Creates an AbstractEffect object, requiring the effect's value.
 	 *
-	 * @param value        The value of the effect
+	 * @param value The value of the effect
 	 */
 	public AbstractEffect(int value) {
 		this.value = value;

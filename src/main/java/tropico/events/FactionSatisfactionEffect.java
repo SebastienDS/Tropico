@@ -19,8 +19,8 @@ public class FactionSatisfactionEffect extends AbstractEffect {
 	 *
 	 * Creates an Effect object, requiring the faction and the value.
 	 *
-	 * @param faction		The name of the faction
-	 * @param value         The value of the effect
+	 * @param faction The name of the faction
+	 * @param value   The value of the effect
 	 */
 	public FactionSatisfactionEffect(String faction, int value) {
 		super(value);
@@ -41,5 +41,5 @@ public class FactionSatisfactionEffect extends AbstractEffect {
 	public void applyEffect(Player p) {
 		p.getFactionFromName(factionName).addSatisfaction(super.use());
 	}
-	
+
 }

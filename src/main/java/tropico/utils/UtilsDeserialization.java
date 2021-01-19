@@ -137,7 +137,7 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	 * 
 	 * @param array The JsonArray supposed to be a list of effects.
 	 * @param context
-	 * @return Effects deserialized
+	 * @return Returns an ArrayList of Effects.
 	 */
 	private ArrayList<Effect> deserializeEffects(JsonArray array, JsonDeserializationContext context) {
 		ArrayList<Effect> effects = new ArrayList<>();
@@ -148,11 +148,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * custom deserialize for effect
+	 * Deserializes a JsonObject as a Collection of Effects.
 	 * 
-	 * @param effect
+	 * @param effect The JsonObject supposed to be an effect.
 	 * @param context
-	 * @return Effect deserialize
+	 * @return Returns an Effect.
 	 * @throws IllegalStateException if type is invalid
 	 */
 	private Collection<Effect> deserializeEffect(JsonObject effect, JsonDeserializationContext context) {
@@ -169,11 +169,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * deserialize resource effect
+	 * Deserializes resource effect.
 	 * 
 	 * @param effect
 	 * @param context
-	 * @return OtherEffect
+	 * @return Returns an OtherEffect.
 	 */
 	private Effect deserializeResourcesEffect(JsonObject effect, JsonDeserializationContext context) {
 		Type resourceType = new TypeToken<OtherEffect.types>() {
@@ -204,11 +204,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * deserialize Supporter effect
+	 * Deserializes Supporter effect. Can return multiple if "faction" equals "all".
 	 * 
 	 * @param effect
 	 * @param context
-	 * @return SupporterNumberEffect
+	 * @return Returns a SupporterNumberEffect.
 	 */
 	private List<Effect> deserializeSupporterEffect(JsonObject effect, JsonDeserializationContext context) {
 		String faction = effect.get("faction").getAsString();
@@ -237,11 +237,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * deserialize satisfaction effect
+	 * Deserializes satisfaction effect. Can return multiple if "faction" equals "all".
 	 * 
 	 * @param effect
 	 * @param context
-	 * @return FactionSatisfactionEffect
+	 * @return Returns a lis FactionSatisfactionEffect.
 	 */
 	private List<Effect> deserializeSatisfactionEffect(JsonObject effect, JsonDeserializationContext context) {
 		String faction = effect.get("faction").getAsString();
@@ -274,10 +274,10 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * load factions from json file
+	 * Loads factions from a json file.
 	 *
-	 * @param path The path where the json file is located
-	 * @return List of faction
+	 * @param path The path where the json file is located.
+	 * @return Returns a List of faction.
 	 * @throws FileNotFoundException
 	 */
 	public static List<Faction> loadFactions(String path) throws FileNotFoundException {
@@ -289,10 +289,10 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * Loads resources from a json file
+	 * Loads resources from a json file.
 	 *
-	 * @param path The path where the json file is located
-	 * @return Returns a Resources object
+	 * @param path The path where the json file is located.
+	 * @return Returns a Resources object.
 	 * @throws FileNotFoundException
 	 */
 	public static Resources loadResources(String path) throws FileNotFoundException {
