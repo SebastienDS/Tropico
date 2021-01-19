@@ -163,7 +163,7 @@ public class Resources implements Serializable {
 	 */
 	public void addMoney(int value) {
 		if (treasury < -value) {
-			throw new IllegalArgumentException("The cost is too high for the treasury.");
+			treasury = 0;
 		}
 		treasury += value;
 	}
@@ -175,7 +175,7 @@ public class Resources implements Serializable {
 	 */
 	public void addFood(int value) {
 		if (foodUnit < -value) {
-			throw new IllegalArgumentException("The cost is too high for the food supplies.");
+			foodUnit = 0;
 		}
 		foodUnit += value;
 	}
