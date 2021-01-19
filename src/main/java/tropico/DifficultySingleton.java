@@ -5,7 +5,7 @@ package tropico;
  * The field difficulty can only be initialised once, after this, you'll only be
  * able to recover it.
  * 
- * @author Corentin OGER & Sébastien DOS SANTOS
+ * @author Corentin OGER and Sébastien DOS SANTOS
  *
  */
 public final class DifficultySingleton {

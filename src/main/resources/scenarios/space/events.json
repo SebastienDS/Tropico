@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Des réfugiés martiens souhaitent venir vivre en paix.",
+    "choices": [
+      {
+        "label": "Décliner poliment au motif que vous n’avez pas les infrastructures pour eux",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": -5
+          },
+          {
+            "type": "satisfaction",
+            "faction": "planetaristes",
+            "value": 15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "colonialistes",
+            "value": -15
+          }
+        ]
+      },
+      {
+        "label": "Décliner au motif qu’ils ne sont pas de même culte que vous",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": 15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": -15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "planetaristes",
+            "value": 15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "colonialistes",
+            "value": -15
+          }
+        ]
+      },
+      {
+        "label": "Accepter sans condition",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": 10
+          },
+          {
+            "type": "supporter",
+            "faction": "colonialistes",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "satisfaction",
+            "faction": "planetaristes",
+            "value": -20
+          }
+        ]
+      },
+      {
+        "label": "Accepter sous conditions d’aide financière de la part de l’OCU",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "religieux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "supporter",
+            "faction": "liberaux",
+            "value": 10,
+            "percentage": true
+          },
+          {
+            "type": "satisfaction",
+            "faction": "planetaristes",
+            "value": -20
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": 10
+          },
+          {
+            "type": "resources",
+            "resource": "TREASURY",
+            "value": 200
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Vous avez découvert un gisement d’or ! Que faire ?",
+    "choices": [
+      {
+        "label": "Utilisons-le pour améliorer le bien-être des citoyens !",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "communistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": -30
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "label": "Exploitons-le au maximum pour moderniser la planète !",
+        "effects": [
+          {
+            "type": "supporter",
+            "faction": "communistes",
+            "value": 10,
+            "percentage": false
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": 10
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": 20
+          }
+        ]
+      },
+      {
+        "label": "Vendons les terrains à TRAPPIST-1 d et renflouons nos comptes secrets.",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "planetaristes",
+            "value": -30
+          },
+          {
+            "type": "satisfaction",
+            "faction": "loyalistes",
+            "value": 15
+          },
+          {
+            "type": "resources",
+            "resource": "TREASURY",
+            "value": 100
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "La Terre est sur la trajectoire d'une tempête d'astéroïdes ! Tout le monde est tendu.",
+    "choices": [
+      {
+        "label": "Préparons nous autant que possible.",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "all",
+            "value": -5
+          },
+          {
+            "type": "resources",
+            "resource": "TREASURY",
+            "value": -100
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": 15
+          }
+        ]
+      }
+    ]
+  }
+]

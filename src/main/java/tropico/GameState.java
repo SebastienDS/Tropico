@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  * <li>The current turn</li>
  * </ul>
  *
- * @author Corentin OGER & Sébastien DOS SANTOS
+ * @author Corentin OGER and Sébastien DOS SANTOS
  *
  */
 public class GameState implements Serializable {
@@ -201,14 +201,13 @@ public class GameState implements Serializable {
 	private Event newEvent() {
 		Random rand = new Random();
 
-		if (rand.nextInt(2) == 1) {
+		if (rand.nextInt(3) == 2) {
 			Optional<Event> e = this.getPendingEvent();
 			if (e.isPresent()) {
 				Event event = e.get();
 				pendingEvents.remove(event);
 				return event;
 			}
-			return pendingEvents.remove(rand.nextInt(pendingEvents.size()));
 		}
 
 		// Checks if there is still events available for the current season

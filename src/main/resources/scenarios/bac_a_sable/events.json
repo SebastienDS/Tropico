@@ -85,7 +85,6 @@
   },
   {
     "name": "Vous avez découvert un gisement d’or ! Que faire ?",
-    "seasons": ["AUTUMN", "WINTER"],
     "choices": [
       {
         "label": "Utilisons-le pour améliorer le bien-être des citoyens !",
@@ -223,6 +222,223 @@
             "type": "resources",
             "resource": "FARMING",
             "value": -10
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Des pilleurs attaquent nos champs ! Comment devons nous réagir ?",
+    "seasons": ["SPRING", "SUMMER", "AUTUMN"],
+    "choices": [
+      {
+        "label": "Protéger l'agriculture de masse",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": -10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "ecologistes",
+            "value": -10
+          },
+          {
+            "type": "resources",
+            "resource": "FARMING",
+            "value": -5
+          },
+          {
+            "type": "resources",
+            "resource": "FOODUNIT",
+            "value": -30
+          }
+        ]
+      },
+      {
+        "label": "Protéger les petits producteurs",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "communistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "ecologistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": -10
+          },
+          {
+            "type": "resources",
+            "resource": "FARMING",
+            "value": -15
+          },
+          {
+            "type": "resources",
+            "resource": "FOODUNIT",
+            "value": -60
+          }
+        ]
+      },
+      {
+        "label": "Protéger les deux",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "communistes",
+            "value": 15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "ecologistes",
+            "value": 10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": -20
+          },
+          {
+            "type": "satisfaction",
+            "faction": "militaristes",
+            "value": -10
+          },
+          {
+            "type": "resources",
+            "resource": "TREASURY",
+            "value": -200
+          }
+        ],
+        "next": {
+          "name": "Due aux nombreuses récoltes, un festival a été organisé par le peuple !",
+          "seasons": ["SPRING", "SUMMER"],
+          "choices": [
+            {
+              "label": "Aider le financement",
+              "effects": [
+                {
+                  "type": "satisfaction",
+                  "faction": "capitalistes",
+                  "value": -10
+                },
+                {
+                  "type": "satisfaction",
+                  "faction": "liberaux",
+                  "value": 10
+                },
+                {
+                  "type": "satisfaction",
+                  "faction": "ecologistes",
+                  "value": 10
+                },
+                {
+                  "type": "satisfaction",
+                  "faction": "nationalistes",
+                  "value": 10
+                },
+                {
+                  "type": "resources",
+                  "resource": "FARMING",
+                  "value": 5
+                },
+                {
+                  "type": "resources",
+                  "resource": "FOODUNIT",
+                  "value": 40
+                },
+                {
+                  "type": "resources",
+                  "resource": "TREASURY",
+                  "value": -160
+                }
+              ]
+            },
+            {
+              "label": "Ne rien faire",
+              "effects": [
+                {
+                  "type": "satisfaction",
+                  "faction": "nationalistes",
+                  "value": -10
+                },
+                {
+                  "type": "satisfaction",
+                  "faction": "ecologistes",
+                  "value": -5
+                },
+                {
+                  "type": "resources",
+                  "resource": "FOODUNIT",
+                  "value": 10
+                }
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "label": "Ne pas protéger l'argiculture et industrialiser le pays",
+        "effects": [
+          {
+            "type": "satisfaction",
+            "faction": "capitalistes",
+            "value": 20
+          },
+          {
+            "type": "satisfaction",
+            "faction": "liberaux",
+            "value": -15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "ecologistes",
+            "value": -15
+          },
+          {
+            "type": "satisfaction",
+            "faction": "religieux",
+            "value": -10
+          },
+          {
+            "type": "satisfaction",
+            "faction": "loyalistes",
+            "value": -10
+          },
+          {
+            "type": "resources",
+            "resource": "INDUSTRY",
+            "value": 10
+          },
+          {
+            "type": "resources",
+            "resource": "FARMING",
+            "value": -20
+          },
+          {
+            "type": "resources",
+            "resource": "FOODUNIT",
+            "value": -90
           }
         ]
       }

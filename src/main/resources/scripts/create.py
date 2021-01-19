@@ -21,7 +21,7 @@ def resources_effect(effect):
             break
         print("resource incorrect")
 
-        
+
 
     effect["resource"] = resource
     effect["value"] = int(input("value : "))
@@ -33,7 +33,7 @@ type_effect = {
 }
 
 def write_scenario(filename, scenario):
-    with open("./../src/main/resources/scenario/{}.json".format(filename), "w") as f:
+    with open("./../src/main/resources/scenarios/{}.json".format(filename), "w") as f:
         json.dump(scenario, f)
 
 def create(creator, name):
@@ -87,8 +87,8 @@ def create_effect():
         if type_  in default_type:
             break
         print("type incorrect")
-        
-    
+
+
     effect["type"] = type_
 
     type_effect[type_](effect)

@@ -13,7 +13,7 @@ import java.util.Objects;
  * <li>The faction's supporter count</li>
  * </ul>
  * 
- * @author Corentin OGER & Sébastien DOS SANTOS
+ * @author Corentin OGER and Sébastien DOS SANTOS
  *
  */
 public class Faction implements Serializable {
