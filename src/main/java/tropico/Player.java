@@ -10,7 +10,6 @@ import java.util.*;
 /**
  * This class contains informations about a player, including:
  * <ul>
- * <li></li>
  * <li>The name of the player</li>
  * <li>The resources of the player</li>
  * <li>A list of the factions</li>
@@ -389,22 +388,30 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Calculates the number of suppor TODO
-	 * @param pop
-	 * @return
+	 * Calculates the number of supporters generated when there is enough farming
+	 * and chooses a faction for each of them. Only called once in
+	 * generateResources.
+	 * 
+	 * @param pop The number of total supporters.
+	 * @return Returns the number of supporters generated.
 	 */
 	private int generateNewSupporters(int pop) {
 		Random rd = new Random();
+
+		// The number of supporters to generate
 		int addedPop = (int) (pop * (rd.nextFloat() * 9 + 1) / 100);
 		double rdfloat;
 		double count;
 
+		// For each of them
 		for (int i = 0; i < addedPop; i++) {
 			rdfloat = rd.nextDouble();
 			count = 0;
 
+			// Calculates each factions' odds to get the new supporter
 			HashMap<Faction, Double> factionChances = calculateFactionsChances(pop);
 
+			// Randomly chooses one of the faction and adds the supporter
 			for (Faction faction : factions) {
 				count += factionChances.get(faction);
 
@@ -418,12 +425,26 @@ public class Player implements Serializable {
 		return addedPop;
 	}
 
+	/**
+	 * This method is only used once in generateNewSupporters and only serves to
+	 * calculate the odds of each factions to get a new supporter. Uses the total
+	 * number of supporters, each factions' count of supporter and their
+	 * satisfaction. Returns an hashmap with the faction associated with its odds.
+	 * 
+	 * @param pop The total number of supporters.
+	 * @return Returns an HashMap containing the Factions as keys, and their chances
+	 *         to get a new supporter as values.
+	 */
 	private HashMap<Faction, Double> calculateFactionsChances(int pop) {
 		HashMap<Faction, Double> chances = new HashMap<Faction, Double>();
 		float factor;
 
 		for (Faction faction : factions) {
+			// A factor calculated by getting the satisfaction between 0.1 and 1 or 0.2 if
+			// the factor is too low
 			factor = (float) Math.max(faction.getSatisfaction() * 0.9 / 100 + 0.1, 0.2);
+			// First association : faction with its percentage of supporters multiplied by
+			// the previous factor
 			chances.put(faction, faction.getSupporter() * 1.0 / pop * factor);
 		}
 
@@ -433,6 +454,7 @@ public class Player implements Serializable {
 		}
 
 		for (Faction faction : factions) {
+			// Second association : faction with its odd between 0 and 1
 			chances.replace(faction, chances.get(faction) / total);
 		}
 
