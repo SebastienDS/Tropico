@@ -241,7 +241,7 @@ public class Main {
 	 * scenarios and the name of the scenario's directory is written in a txt file.
 	 * 
 	 * @param sc The scanner used to interact with the user.
-	 * @return
+	 * @return Returns a String representing the chosen scenario's path.
 	 * @throws IOException
 	 */
 	private static String gamemodeChoice(Scanner sc) throws IOException {
@@ -256,9 +256,12 @@ public class Main {
 		String[] splitedLine;
 		int count = 0;
 
+		// Reading all the lines
 		while ((line = reader.readLine()) != null) {
 			count++;
 			splitedLine = line.split(":");
+
+			// Prints the gamemodes
 			System.out.println(count + ") " + splitedLine[0]);
 			modes.add(splitedLine[1]);
 		}
@@ -271,9 +274,10 @@ public class Main {
 	}
 
 	/**
-	 * save the game
+	 * Saves the game by calling the method saveObject from Backup. A different save
+	 * file for each mode.
 	 * 
-	 * @param game
+	 * @param game The GameState that has to be savec in the file.
 	 */
 	private static void saveGame(GameState game) throws IOException {
 		Backup.saveObject("src/main/resources/backup/" + game.getGamemode() + "_save", game);
@@ -281,12 +285,12 @@ public class Main {
 
 	/**
 	 * Private method used to ask the player the action he wants to make until he
-	 * chooses to quit or make a decision for the current event
+	 * chooses to quit or make a decision for the current event.
 	 * 
-	 * @param sc      The scanner to get the player's choice
-	 * @param game    The GameState
-	 * @param event   The current event
-	 * @param choices The String containing the description of the possible choices
+	 * @param sc      The scanner to get the player's choice.
+	 * @param game    The GameState containing all the informations.
+	 * @param event   The current event the player has to deal with.
+	 * @param choices The String containing the description of the possible choices.
 	 * @return Returns a boolean telling if whether or not the game has to stop
 	 * @throws IOException
 	 */
@@ -297,28 +301,34 @@ public class Main {
 		input = getInt(sc, -1, 4);
 		switch (input) {
 		case -1: {
+			// Quits the game
 			return true;
 		}
 		case 0: {
+			// Saves the game
 			saveGame(game);
 			System.out.println("Jeu sauvegardé avec succès.");
 			return actionChoice(sc, game, event, choices);
 		}
 		case 1: {
+			// Prints the factions of the current player
 			List<Faction> factions = game.getPlayer().getFactions();
 
 			factions.forEach(System.out::println);
 			return actionChoice(sc, game, event, choices);
 		}
 		case 2: {
+			// Prints the resources of the current player
 			System.out.println(game.getPlayer().getResourcesAsString());
 			return actionChoice(sc, game, event, choices);
 		}
 		case 3: {
+			// Prints the event
 			System.out.println(event);
 			return actionChoice(sc, game, event, choices);
 		}
 		case 4: {
+			// Forces the player to make a choice
 			System.out.println(event);
 			break;
 		}
@@ -327,9 +337,20 @@ public class Main {
 		return false;
 	}
 
+	/**
+	 * This private method is only called during winter, and triggers the end of the
+	 * year, so the player has yet another choice to make.
+	 * 
+	 * @param sc      The scanner used to interact with the user.
+	 * @param game    The GameState containing all the informations.
+	 * @param choices The possible choices for the player.
+	 * @return Returns true if the player decided to quit or if he lost, false
+	 *         otherwise.
+	 * @throws IOException
+	 */
 	private static boolean endOfYear(Scanner sc, GameState game, String choices) throws IOException {
 		if (!game.isEndOfYear()) {
-			throw new IllegalStateException("Fin d'année au mauvais moment");
+			throw new IllegalStateException("Not expected end of year.");
 		}
 		if (endOfYearChoice(sc, game, choices)) {
 			return true;
@@ -346,60 +367,88 @@ public class Main {
 		return false;
 	}
 
+	/**
+	 * This method allows the player to choice an action. He can make a bribe, buy
+	 * food, and when he has finished, he can skip to the next year and see the
+	 * summary of the year.
+	 * 
+	 * @param sc      The scanner used to interact with the user.
+	 * @param game    The GameState containing all the informations.
+	 * @param choices The possible choices for the player.
+	 * @return Returns true if the player decided to quit, false otherwise.
+	 * @throws IOException
+	 */
 	private static boolean endOfYearChoice(Scanner sc, GameState game, String choices) throws IOException {
 		int input;
 		Player p = game.getPlayer();
 
+		// Asks the player to choose something
 		System.out.println("\n" + choices);
-
 		System.out.println("\nVous possédez actuellement " + p.getTreasury() + "$");
 		input = getInt(sc, -1, 5);
 
 		switch (input) {
 		case -1: {
+			// Quits the game
 			return true;
 		}
 		case 0: {
+			// Saves the game
 			saveGame(game);
 			System.out.println("Jeu sauvegardé avec succès.");
 			return endOfYearChoice(sc, game, choices);
 		}
 		case 1: {
+			// Shows factions
 			List<Faction> factions = p.getFactions();
 
 			factions.forEach(System.out::println);
 			return endOfYearChoice(sc, game, choices);
 		}
 		case 2: {
+			// Prints resources
 			System.out.println(p.getResourcesAsString());
 			return endOfYearChoice(sc, game, choices);
 		}
 		case 3: {
+			// Makes a bribe (if possible)
 			bribeChoice(sc, game);
 			return endOfYearChoice(sc, game, choices);
 		}
 		case 4: {
+			// Buys food
 			marketChoice(sc, game);
 			return endOfYearChoice(sc, game, choices);
 		}
+		// 5 skips to the summary
 		}
 
 		return false;
 	}
 
+	/**
+	 * This private method allows the player to choose which faction we wants to
+	 * make a bribe for.
+	 * 
+	 * @param sc   The scanner used to interact with the user.
+	 * @param game The GameState containing all the informations.
+	 */
 	private static void bribeChoice(Scanner sc, GameState game) {
 		Player p = game.getPlayer();
 		List<Faction> factions = p.getSatisfiedFactions();
 		StringBuilder choices = new StringBuilder("0) Retour");
 		int len = factions.size();
 
+		// Adds every faction and their cost to a StringBuilder
 		for (int i = 0; i < len; i++) {
 			choices.append("\n").append(i + 1).append(") ").append(factions.get(i)).append(" coût : ")
 					.append(factions.get(i).getBribeCost()).append("$");
 		}
 
+		// Prints the StringBuilder
 		System.out.println(choices);
 
+		// Chooses which faction or stop
 		int input;
 		if ((input = getInt(sc, 0, len)) == 0) {
 			return;
@@ -407,6 +456,8 @@ public class Main {
 
 		Faction f = factions.get(input - 1);
 
+		// If you can't make a bribe for the faction you chose, you are still in the
+		// same menu.
 		if (!p.bribe(f)) {
 			System.out.println("Vous n'avez pas assez d'argent pour donner un pot de vin à cette faction !");
 			bribeChoice(sc, game);
@@ -414,20 +465,30 @@ public class Main {
 
 	}
 
+	/**
+	 * This private method allows the player to choose how many food he wants to buy
+	 * to the market.
+	 * 
+	 * @param sc   The scanner used to interact with the user.
+	 * @param game The GameState containing all the informations.
+	 */
 	private static void marketChoice(Scanner sc, GameState game) {
 		Player p = game.getPlayer();
 		int max = p.getTreasury() / 8;
 
+		// If the player can't buy even one unit
 		if (max == 0) {
 			System.out.println("Vous n'avez pas assez d'argent pour acheter de la nourriture.");
 			return;
 		}
 
+		// Prints the maximum amount the player can buy now
 		System.out.println("Vous avez actuellement " + p.getFoodUnit() + " unités de nourriture.");
 		System.out.println("Combien souhaitez-vous en acheter ? (max:" + max + ")");
 
 		int input = getInt(sc, 0, max);
 
+		// Back to the end of year menu if he decides to buy 0
 		if (input == 0) {
 			return;
 		}

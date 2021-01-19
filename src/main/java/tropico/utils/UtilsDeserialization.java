@@ -15,21 +15,40 @@ import java.io.FileReader;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ * This class contains methods to deserialize a json.
+ * 
+ * @author Corentin OGER and Sébastien DOS SANTOS
+ *
+ */
 public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 
+	/**
+	 * The list of factions, so you can check there isn't a faction that will cause
+	 * an error later.
+	 */
 	private List<Faction> factions;
 
+	/**
+	 * <b>UtilsDeserialization's constructor</b>
+	 * 
+	 * Takes a list of factions that shouldn't be null.
+	 * 
+	 * @param factions The list containing all of the factions of the current
+	 *                 scenario.
+	 */
 	public UtilsDeserialization(List<Faction> factions) {
 		this.factions = Objects.requireNonNull(factions);
 	}
 
 	/**
-	 * Custom deserialize for events
+	 * Custom deserializer for events. Reads a json file and extracts a list of
+	 * Events.
 	 * 
 	 * @param jsonElement
 	 * @param type
 	 * @param jsonDeserializationContext
-	 * @return Map with events for each season
+	 * @return Returns a List of all the events.
 	 * @throws JsonParseException
 	 */
 	@Override
@@ -45,22 +64,25 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * custom deserialize for an Event
+	 * Deserializes a JsonObject as an event. Checks if optionnal fields are
+	 * missing, and creates default variables if so.
 	 * 
-	 * @param obj
+	 * @param obj The JsonObject supposed to be an Event.
 	 * @param context
-	 * @return Event deserialized
+	 * @return Returns an Event.
 	 */
 	private Event deserializeEvent(JsonObject obj, JsonDeserializationContext context) {
 		String name = obj.get("name").getAsString();
 		List<Season> seasons;
 
+		// If season isn't here, the event can occur during any of them
 		if (obj.has("seasons")) {
 			seasons = deserializeSeasons(obj.get("seasons").getAsJsonArray(), context);
 		} else {
 			seasons = Arrays.asList(Season.values());
 		}
 
+		// Calls the method to deserialize the choices
 		List<Choice> choices = new ArrayList<>();
 		obj.get("choices").getAsJsonArray()
 				.forEach(choice -> choices.add(deserializeChoice(choice.getAsJsonObject(), context)));
@@ -69,11 +91,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * custom deserialize for a seasons
+	 * Deserializes a JsonArray as a list of seasons. The array is supposed to be a list of seasons.
 	 * 
-	 * @param array
+	 * @param array The JsonArray supposed to be a list of seasons.
 	 * @param context
-	 * @return List of seasons
+	 * @return Returns a List of Seasons.
 	 */
 	private List<Season> deserializeSeasons(JsonArray array, JsonDeserializationContext context) {
 		List<Season> seasons = new ArrayList<>();
@@ -91,11 +113,11 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * custom deserialize for a choice
+	 * Deserializes a JsonObject as a Choice. Replaces optional field by default inputs.
 	 * 
-	 * @param obj
+	 * @param obj The JsonObject supposed to be a Choice.
 	 * @param context
-	 * @return Choice deserialized
+	 * @return Returns a Choice object.
 	 */
 	private Choice deserializeChoice(JsonObject obj, JsonDeserializationContext context) {
 		String label = obj.get("label").getAsString();
@@ -111,15 +133,16 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 	}
 
 	/**
-	 * custom deserialize for effects of a choice
+	 * Deserializes a JsonArray as an ArrayList of Effects.
 	 * 
-	 * @param array
+	 * @param array The JsonArray supposed to be a list of effects.
 	 * @param context
 	 * @return Effects deserialized
 	 */
 	private ArrayList<Effect> deserializeEffects(JsonArray array, JsonDeserializationContext context) {
 		ArrayList<Effect> effects = new ArrayList<>();
 
+		// Calls another method to deserialize one event
 		array.forEach(effect -> effects.addAll(deserializeEffect(effect.getAsJsonObject(), context)));
 		return effects;
 	}
@@ -264,7 +287,7 @@ public class UtilsDeserialization implements JsonDeserializer<List<Event>> {
 		Gson gson = new Gson();
 		return gson.fromJson(new JsonReader(new FileReader(path)), eventType);
 	}
-	
+
 	/**
 	 * Loads resources from a json file
 	 *
